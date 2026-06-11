@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import { WalletProvider } from '../context/WalletContext';
 import { ToastProvider } from '../context/ToastContext';
@@ -12,6 +12,12 @@ export const metadata: Metadata = {
     icon: '/favicon-round.png',
     apple: '/favicon-round.png',
   },
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -30,8 +36,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <WalletProvider>
             <div className="relative z-10 flex flex-col min-h-screen">
               <Navbar />
-              <main className="flex-1 px-4 py-6 sm:py-10">{children}</main>
-              <footer className="px-6 py-6 text-center text-txt-disabled text-xs">
+              {/* pb-20 sm:pb-0 reserves space for the mobile bottom nav */}
+              <main className="flex-1 px-4 py-6 sm:py-10 pb-24 sm:pb-10">{children}</main>
+              <footer className="hidden sm:block px-6 py-6 text-center text-txt-disabled text-xs">
                 StellarSwap · Stellar Testnet · Not audited — use at your own risk
               </footer>
             </div>

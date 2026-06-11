@@ -24,10 +24,12 @@ export function ConnectButton() {
         <button
           onClick={connect}
           disabled={isConnecting}
-          className="btn-pink-soft px-4 py-2 text-sm flex items-center gap-2"
+          className="btn-pink-soft px-3 sm:px-4 py-2 text-sm flex items-center gap-2"
         >
           {isConnecting && <Spinner size={14} />}
-          {isConnecting ? 'Connecting…' : 'Connect Wallet'}
+          {/* Shorter label on mobile */}
+          <span className="sm:hidden">{isConnecting ? '…' : 'Connect'}</span>
+          <span className="hidden sm:inline">{isConnecting ? 'Connecting…' : 'Connect Wallet'}</span>
         </button>
         {error && (
           <span className="text-state-error text-[11px] mt-1 max-w-[220px] text-right">{error}</span>
@@ -42,10 +44,19 @@ export function ConnectButton() {
     <div className="relative" ref={ref}>
       <button
         onClick={() => setOpen(o => !o)}
-        className="bg-bg-module hover:bg-bg-interactive border border-bg-interactive rounded-pill px-3 py-2 text-sm font-medium text-txt-primary flex items-center gap-2 transition-colors"
+        className="bg-bg-module hover:bg-bg-interactive border border-bg-interactive transition-colors flex items-center gap-2
+                   rounded-full p-2 sm:rounded-pill sm:px-3 sm:py-2"
+        aria-label={`Wallet connected: ${publicKey ? shortAddr(publicKey) : ''}`}
       >
-        <span className="w-2 h-2 rounded-full" style={{ background: wrongNetwork ? '#FD4040' : '#27AE60' }} />
-        {shortAddr(publicKey!)}
+        {/* Status dot — always visible */}
+        <span
+          className="w-2.5 h-2.5 rounded-full flex-shrink-0"
+          style={{ background: wrongNetwork ? '#FD4040' : '#27AE60' }}
+        />
+        {/* Address — desktop only */}
+        <span className="hidden sm:inline text-sm font-medium text-txt-primary">
+          {shortAddr(publicKey!)}
+        </span>
       </button>
 
       {open && (

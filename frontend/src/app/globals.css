@@ -127,4 +127,8 @@ input[type='number'] {
   .btn-pink-soft {
     @apply bg-uni-pinkBg text-uni-pink font-semibold rounded-pill hover:bg-uni-pink/20 transition-colors;
   }
+  /* iOS safe-area padding for fixed bottom nav */
+  .safe-area-bottom {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
 }
