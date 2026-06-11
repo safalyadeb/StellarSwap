@@ -1,0 +1,130 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;485;535;600;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  background: #0d0e0e;
+  color: #fff;
+  font-feature-settings: 'ss01' on, 'cv01' on;
+}
+
+/* Ambient glow behind the app */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(ellipse 60% 30% at 50% 0%, rgba(255, 235, 0, 0.10), transparent 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Wave glow blobs (top & bottom) ── */
+.glow-wave-blob {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(72px);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Top blobs */
+.glow-top-1 {
+  width: 580px; height: 300px;
+  top: -140px; left: 8%;
+  background: radial-gradient(ellipse, rgba(255, 235, 0, 0.45) 0%, transparent 70%);
+  animation: floatX 8s ease-in-out infinite alternate;
+}
+.glow-top-2 {
+  width: 460px; height: 250px;
+  top: -110px; left: 50%;
+  background: radial-gradient(ellipse, rgba(255, 235, 0, 0.32) 0%, transparent 70%);
+  animation: floatX 11s ease-in-out infinite alternate-reverse;
+}
+.glow-top-3 {
+  width: 380px; height: 220px;
+  top: -90px; right: 5%;
+  background: radial-gradient(ellipse, rgba(255, 235, 0, 0.28) 0%, transparent 70%);
+  animation: floatX 9s ease-in-out infinite alternate;
+  animation-delay: -3s;
+}
+
+/* Bottom blobs */
+.glow-bot-1 {
+  width: 560px; height: 290px;
+  bottom: -140px; right: 6%;
+  background: radial-gradient(ellipse, rgba(255, 235, 0, 0.42) 0%, transparent 70%);
+  animation: floatX 10s ease-in-out infinite alternate-reverse;
+}
+.glow-bot-2 {
+  width: 440px; height: 240px;
+  bottom: -110px; left: 30%;
+  background: radial-gradient(ellipse, rgba(255, 235, 0, 0.30) 0%, transparent 70%);
+  animation: floatX 13s ease-in-out infinite alternate;
+  animation-delay: -5s;
+}
+.glow-bot-3 {
+  width: 360px; height: 210px;
+  bottom: -90px; left: 4%;
+  background: radial-gradient(ellipse, rgba(255, 235, 0, 0.25) 0%, transparent 70%);
+  animation: floatX 7s ease-in-out infinite alternate-reverse;
+  animation-delay: -2s;
+}
+
+@keyframes floatX {
+  0%   { transform: translateX(0px); }
+  100% { transform: translateX(60px); }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Hide number input spinners */
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: #2c2f36;
+  border-radius: 8px;
+}
+
+/* Toast progress bar drain */
+@keyframes drain {
+  from { width: 100%; }
+  to   { width: 0%; }
+}
+.toast-drain {
+  animation: drain 5s linear forwards;
+}
+
+@layer components {
+  .card {
+    @apply bg-bg-surface rounded-card border border-bg-interactive shadow-card;
+  }
+  /* Stellar gold primary button (was btn-pink) */
+  .btn-pink {
+    @apply bg-uni-pink hover:brightness-110 text-black font-semibold rounded-module
+           transition-all disabled:opacity-40 disabled:cursor-not-allowed;
+  }
+  .btn-pink-soft {
+    @apply bg-uni-pinkBg text-uni-pink font-semibold rounded-pill hover:bg-uni-pink/20 transition-colors;
+  }
+}
