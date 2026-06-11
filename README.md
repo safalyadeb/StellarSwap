@@ -253,7 +253,7 @@ See [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md) for the full deployment walkthrou
 
 | Mobile responsive UI | CI/CD pipeline running | Test output |
 |---|---|---|
-| ![Mobile UI](<img width="660" height="1280" alt="2026-06-12 00 42 37" src="https://github.com/user-attachments/assets/649ec175-ac47-4199-af7c-ada839dbeacb" />
+| ![Mobile UI](<img width="250" alt="2026-06-12 00 42 37" src="https://github.com/user-attachments/assets/649ec175-ac47-4199-af7c-ada839dbeacb" />
 ) | ![CI pipeline](docs/screenshots/ci-pipeline.png) | ![Tests passing](docs/screenshots/tests-passing.png) |
 
 > Images live in [`docs/screenshots/`](docs/screenshots/). See the [capture guide](docs/screenshots/README.md) to (re)generate them.
