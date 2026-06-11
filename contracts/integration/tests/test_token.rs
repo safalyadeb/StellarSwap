@@ -96,5 +96,10 @@ fn double_initialize_panics() {
     env.mock_all_auths();
     let admin = Address::generate(&env);
     let tok = mk_token(&env, &admin, "TST");
-    tok.initialize(&admin, &7u32, &String::from_str(&env, "Second"), &String::from_str(&env, "SEC"));
+    tok.initialize(
+        &admin,
+        &7u32,
+        &String::from_str(&env, "Second"),
+        &String::from_str(&env, "SEC"),
+    );
 }

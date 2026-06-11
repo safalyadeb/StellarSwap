@@ -74,8 +74,12 @@ pub fn sqrt(y: i128) -> i128 {
     if y < 0 {
         panic!("sqrt of negative");
     }
-    if y == 0 { return 0; }
-    if y < 4  { return 1; }
+    if y == 0 {
+        return 0;
+    }
+    if y < 4 {
+        return 1;
+    }
 
     let mut z = y;
     let mut x = y / 2 + 1;
@@ -92,7 +96,9 @@ pub fn sqrt(y: i128) -> i128 {
 pub fn checked_mul(env: &Env, a: i128, b: i128) -> i128 {
     match a.checked_mul(b) {
         Some(v) => v,
-        None => { env.panic_with_error(StellarSwapError::Overflow); }
+        None => {
+            env.panic_with_error(StellarSwapError::Overflow);
+        }
     }
 }
 
@@ -100,7 +106,9 @@ pub fn checked_mul(env: &Env, a: i128, b: i128) -> i128 {
 pub fn checked_add(env: &Env, a: i128, b: i128) -> i128 {
     match a.checked_add(b) {
         Some(v) => v,
-        None => { env.panic_with_error(StellarSwapError::Overflow); }
+        None => {
+            env.panic_with_error(StellarSwapError::Overflow);
+        }
     }
 }
 
@@ -108,7 +116,9 @@ pub fn checked_add(env: &Env, a: i128, b: i128) -> i128 {
 pub fn checked_sub(env: &Env, a: i128, b: i128) -> i128 {
     match a.checked_sub(b) {
         Some(v) => v,
-        None => { env.panic_with_error(StellarSwapError::Overflow); }
+        None => {
+            env.panic_with_error(StellarSwapError::Overflow);
+        }
     }
 }
 
@@ -119,7 +129,9 @@ mod tests {
     use super::*;
     use soroban_sdk::Env;
 
-    fn env() -> Env { Env::default() }
+    fn env() -> Env {
+        Env::default()
+    }
 
     #[test]
     fn test_amount_out_symmetric_pool() {
@@ -213,7 +225,9 @@ mod tests {
         let out_no_fee = amount_in * r_out / (r_in + amount_in);
         // ratio should be ~997/1000 ≈ 99.7%
         let ratio_bps = out_with_fee * 10_000 / out_no_fee;
-        assert!(ratio_bps >= 9960 && ratio_bps <= 9980,
-            "ratio {ratio_bps} bps outside 9960–9980 range");
+        assert!(
+            ratio_bps >= 9960 && ratio_bps <= 9980,
+            "ratio {ratio_bps} bps outside 9960–9980 range"
+        );
     }
 }

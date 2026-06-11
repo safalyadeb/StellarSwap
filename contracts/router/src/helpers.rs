@@ -1,6 +1,6 @@
 //! Routing helper functions: reserve lookups and multi-hop amount chains.
 
-use soroban_sdk::{panic_with_error, Address, Env, Vec};
+use soroban_sdk::{Address, Env, Vec};
 
 use stellar_swap_shared::{
     errors::StellarSwapError,
@@ -19,7 +19,11 @@ pub fn get_reserves_ordered(
     let pair = PairClient::new(env, &pair_addr);
     let tx = pair.token_x();
     let (rx, ry) = pair.get_reserves();
-    if tx == *token_in { (rx, ry) } else { (ry, rx) }
+    if tx == *token_in {
+        (rx, ry)
+    } else {
+        (ry, rx)
+    }
 }
 
 /// Compute the output amounts for an exact-input multi-hop path.
@@ -65,17 +69,16 @@ pub fn get_amounts_in(
     amounts.set(n - 1, amount_out);
 
     for i in (0..(n - 1)).rev() {
-        let t_in = path.get(i as u32).unwrap();
-        let t_out = path.get(i as u32 + 1).unwrap();
+        let t_in = path.get(i).unwrap();
+        let t_out = path.get(i + 1).unwrap();
         let (r_in, r_out) = get_reserves_ordered(env, factory_addr, &t_in, &t_out);
-        let req = math::get_amount_in(env, amounts.get((i + 1) as u32).unwrap(), r_in, r_out);
-        amounts.set(i as u32, req);
+        let req = math::get_amount_in(env, amounts.get(i + 1).unwrap(), r_in, r_out);
+        amounts.set(i, req);
     }
     amounts
 }
 
 /// Get the pair address for hop `i` in a path.
 pub fn pair_for(env: &Env, factory_addr: &Address, path: &Vec<Address>, i: u32) -> Address {
-    FactoryClient::new(env, factory_addr)
-        .get_pair(&path.get(i).unwrap(), &path.get(i + 1).unwrap())
+    FactoryClient::new(env, factory_addr).get_pair(&path.get(i).unwrap(), &path.get(i + 1).unwrap())
 }

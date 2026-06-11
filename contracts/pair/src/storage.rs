@@ -48,8 +48,16 @@ pub fn extend_persistent(env: &Env, key: &DataKey) {
 // ── Typed storage accessors ───────────────────────────────────────────────────
 
 pub fn get_reserves(env: &Env) -> (i128, i128) {
-    let rx = env.storage().instance().get(&DataKey::ReserveX).unwrap_or(0i128);
-    let ry = env.storage().instance().get(&DataKey::ReserveY).unwrap_or(0i128);
+    let rx = env
+        .storage()
+        .instance()
+        .get(&DataKey::ReserveX)
+        .unwrap_or(0i128);
+    let ry = env
+        .storage()
+        .instance()
+        .get(&DataKey::ReserveY)
+        .unwrap_or(0i128);
     (rx, ry)
 }
 

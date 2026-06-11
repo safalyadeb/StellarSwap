@@ -10,11 +10,17 @@ pub struct PairCreatedData {
 }
 
 pub fn pair_created(env: &Env, token_x: &Address, token_y: &Address, pair: &Address, index: u32) {
-    let topics = (Symbol::new(env, "pair_created"), env.current_contract_address());
-    env.events().publish(topics, PairCreatedData {
-        token_x: token_x.clone(),
-        token_y: token_y.clone(),
-        pair: pair.clone(),
-        pair_index: index,
-    });
+    let topics = (
+        Symbol::new(env, "pair_created"),
+        env.current_contract_address(),
+    );
+    env.events().publish(
+        topics,
+        PairCreatedData {
+            token_x: token_x.clone(),
+            token_y: token_y.clone(),
+            pair: pair.clone(),
+            pair_index: index,
+        },
+    );
 }

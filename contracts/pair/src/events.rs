@@ -1,4 +1,4 @@
-use soroban_sdk::{contractevent, contracttype, Address, Env};
+use soroban_sdk::{contracttype, Address, Env};
 
 // ── Swap event ────────────────────────────────────────────────────────────────
 
@@ -20,7 +20,10 @@ pub fn swap(
     token_in: &Address,
     token_out: &Address,
 ) {
-    let topics = (soroban_sdk::Symbol::new(env, "swap"), env.current_contract_address());
+    let topics = (
+        soroban_sdk::Symbol::new(env, "swap"),
+        env.current_contract_address(),
+    );
     let data = SwapEventData {
         from: from.clone(),
         amount_in,
@@ -49,13 +52,19 @@ pub fn liquidity_added(
     amount_y: i128,
     lp_minted: i128,
 ) {
-    let topics = (soroban_sdk::Symbol::new(env, "liquidity_added"), env.current_contract_address());
-    env.events().publish(topics, LiquidityAddedData {
-        provider: provider.clone(),
-        amount_x,
-        amount_y,
-        lp_minted,
-    });
+    let topics = (
+        soroban_sdk::Symbol::new(env, "liquidity_added"),
+        env.current_contract_address(),
+    );
+    env.events().publish(
+        topics,
+        LiquidityAddedData {
+            provider: provider.clone(),
+            amount_x,
+            amount_y,
+            lp_minted,
+        },
+    );
 }
 
 // ── Liquidity removed ─────────────────────────────────────────────────────────
@@ -76,18 +85,27 @@ pub fn liquidity_removed(
     amount_y: i128,
     lp_burned: i128,
 ) {
-    let topics = (soroban_sdk::Symbol::new(env, "liquidity_removed"), env.current_contract_address());
-    env.events().publish(topics, LiquidityRemovedData {
-        provider: provider.clone(),
-        amount_x,
-        amount_y,
-        lp_burned,
-    });
+    let topics = (
+        soroban_sdk::Symbol::new(env, "liquidity_removed"),
+        env.current_contract_address(),
+    );
+    env.events().publish(
+        topics,
+        LiquidityRemovedData {
+            provider: provider.clone(),
+            amount_x,
+            amount_y,
+            lp_burned,
+        },
+    );
 }
 
 // ── Sync ──────────────────────────────────────────────────────────────────────
 
 pub fn sync(env: &Env, reserve_x: i128, reserve_y: i128) {
-    let topics = (soroban_sdk::Symbol::new(env, "sync"), env.current_contract_address());
+    let topics = (
+        soroban_sdk::Symbol::new(env, "sync"),
+        env.current_contract_address(),
+    );
     env.events().publish(topics, (reserve_x, reserve_y));
 }

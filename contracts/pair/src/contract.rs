@@ -179,13 +179,7 @@ impl PairContract {
     ///
     /// Exactly one of amount_x_out / amount_y_out must be > 0.
     /// Security: fee-adjusted invariant check is the last line of defense.
-    pub fn swap(
-        env: Env,
-        caller: Address,
-        amount_x_out: i128,
-        amount_y_out: i128,
-        to: Address,
-    ) {
+    pub fn swap(env: Env, caller: Address, amount_x_out: i128, amount_y_out: i128, to: Address) {
         caller.require_auth();
         storage::extend_instance(&env);
 
@@ -242,10 +236,8 @@ impl PairContract {
         // Fee-adjusted constant product invariant check.
         // (balance_x*1000 - amount_x_in*3) * (balance_y*1000 - amount_y_in*3)
         //   >= reserve_x * reserve_y * 1000^2
-        let bx_adj = checked_mul(&env, balance_x, 1000)
-            - checked_mul(&env, amount_x_in, 3);
-        let by_adj = checked_mul(&env, balance_y, 1000)
-            - checked_mul(&env, amount_y_in, 3);
+        let bx_adj = checked_mul(&env, balance_x, 1000) - checked_mul(&env, amount_x_in, 3);
+        let by_adj = checked_mul(&env, balance_y, 1000) - checked_mul(&env, amount_y_in, 3);
 
         let k_new = checked_mul(&env, bx_adj, by_adj);
         let k_old = checked_mul(
@@ -331,7 +323,13 @@ impl PairContract {
         lp_token::transfer_from(&env, &spender, &from, &to, amount);
     }
 
-    pub fn lp_approve(env: Env, from: Address, spender: Address, amount: i128, expiration_ledger: u32) {
+    pub fn lp_approve(
+        env: Env,
+        from: Address,
+        spender: Address,
+        amount: i128,
+        expiration_ledger: u32,
+    ) {
         from.require_auth();
         storage::extend_instance(&env);
         lp_token::approve(&env, &from, &spender, amount, expiration_ledger);
@@ -339,7 +337,11 @@ impl PairContract {
 
     pub fn lp_allowance(env: Env, from: Address, spender: Address) -> i128 {
         let (amount, exp) = storage::get_lp_allowance(&env, &from, &spender);
-        if exp < env.ledger().sequence() { 0 } else { amount }
+        if exp < env.ledger().sequence() {
+            0
+        } else {
+            amount
+        }
     }
 
     pub fn lp_balance(env: Env, account: Address) -> i128 {
@@ -350,7 +352,9 @@ impl PairContract {
         storage::get_total_supply(&env)
     }
 
-    pub fn lp_decimals(_env: Env) -> u32 { 7 }
+    pub fn lp_decimals(_env: Env) -> u32 {
+        7
+    }
 
     pub fn lp_name(env: Env) -> String {
         String::from_str(&env, "StellarSwap LP Token")

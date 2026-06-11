@@ -40,7 +40,10 @@ pub fn extend_persistent(env: &Env, key: &DataKey) {
 // ── Typed storage accessors ───────────────────────────────────────────────────
 
 pub fn get_pair_count(env: &Env) -> u32 {
-    env.storage().instance().get(&DataKey::PairCount).unwrap_or(0)
+    env.storage()
+        .instance()
+        .get(&DataKey::PairCount)
+        .unwrap_or(0)
 }
 
 pub fn set_pair_count(env: &Env, count: u32) {
@@ -90,5 +93,9 @@ pub fn get_pair_wasm_hash(env: &Env) -> BytesN<32> {
 /// Sort two token addresses into canonical (lo, hi) order.
 /// Guarantees Pair(A,B) == Pair(B,A) by always using the same key.
 pub fn sort(a: Address, b: Address) -> (Address, Address) {
-    if a < b { (a, b) } else { (b, a) }
+    if a < b {
+        (a, b)
+    } else {
+        (b, a)
+    }
 }

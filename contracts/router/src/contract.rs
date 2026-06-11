@@ -67,7 +67,11 @@ impl RouterContract {
         let (rx, ry) = pair.get_reserves();
 
         // Map caller's (a,b) order to pool's (x,y) order.
-        let (reserve_a, reserve_b) = if token_x == token_a { (rx, ry) } else { (ry, rx) };
+        let (reserve_a, reserve_b) = if token_x == token_a {
+            (rx, ry)
+        } else {
+            (ry, rx)
+        };
 
         // Compute optimal amounts.
         let (amount_a, amount_b) = if reserve_a == 0 && reserve_b == 0 {
@@ -96,7 +100,11 @@ impl RouterContract {
             pair.add_liquidity(&caller, &amount_b, &amount_a, &0i128, &0i128, &to)
         };
 
-        if token_x == token_a { (ax, ay, lp) } else { (ay, ax, lp) }
+        if token_x == token_a {
+            (ax, ay, lp)
+        } else {
+            (ay, ax, lp)
+        }
     }
 
     /// Remove liquidity by burning LP tokens.
@@ -130,7 +138,11 @@ impl RouterContract {
         };
 
         let (out_x, out_y) = pair.remove_liquidity(&caller, &liquidity, &min_x, &min_y, &to);
-        if token_x == token_a { (out_x, out_y) } else { (out_y, out_x) }
+        if token_x == token_a {
+            (out_x, out_y)
+        } else {
+            (out_y, out_x)
+        }
     }
 
     // ── Swap ──────────────────────────────────────────────────────────────
@@ -161,8 +173,7 @@ impl RouterContract {
 
         // Transfer first token from caller to first pair.
         let first_pair = helpers::pair_for(&env, &factory_addr, &path, 0);
-        TokenClient::new(&env, &path.get(0).unwrap())
-            .transfer(&caller, &first_pair, &amount_in);
+        TokenClient::new(&env, &path.get(0).unwrap()).transfer(&caller, &first_pair, &amount_in);
 
         Self::run_swap_chain(&env, &factory_addr, &amounts, &path, &to);
         amounts
@@ -194,8 +205,7 @@ impl RouterContract {
         }
 
         let first_pair = helpers::pair_for(&env, &factory_addr, &path, 0);
-        TokenClient::new(&env, &path.get(0).unwrap())
-            .transfer(&caller, &first_pair, &required_in);
+        TokenClient::new(&env, &path.get(0).unwrap()).transfer(&caller, &first_pair, &required_in);
 
         Self::run_swap_chain(&env, &factory_addr, &amounts, &path, &to);
         amounts
@@ -255,9 +265,9 @@ impl RouterContract {
     ) {
         let n = path.len();
         for i in 0..(n - 1) {
-            let t_in = path.get(i as u32).unwrap();
-            let t_out = path.get(i as u32 + 1).unwrap();
-            let amount_out = amounts.get(i as u32 + 1).unwrap();
+            let t_in = path.get(i).unwrap();
+            let t_out = path.get(i + 1).unwrap();
+            let amount_out = amounts.get(i + 1).unwrap();
 
             let pair_addr = FactoryClient::new(env, factory_addr).get_pair(&t_in, &t_out);
             let pair = PairClient::new(env, &pair_addr);
@@ -270,7 +280,7 @@ impl RouterContract {
             };
 
             // Next hop destination: subsequent pair or final recipient.
-            let hop_to = if (i + 1) < (n - 1) as u32 {
+            let hop_to = if (i + 1) < (n - 1) {
                 helpers::pair_for(env, factory_addr, path, i + 1)
             } else {
                 final_to.clone()
@@ -285,8 +295,8 @@ impl RouterContract {
 
 #[cfg(test)]
 mod test {
-    use stellar_swap_shared::math;
     use soroban_sdk::Env;
+    use stellar_swap_shared::math;
 
     #[test]
     fn test_get_amount_out_basic() {
@@ -300,7 +310,7 @@ mod test {
     fn test_deadline_logic() {
         let current: u64 = 1_000_000;
         assert!(current <= 1_000_300); // ok
-        assert!(current > 999_999);    // expired
+        assert!(current > 999_999); // expired
     }
 
     #[test]

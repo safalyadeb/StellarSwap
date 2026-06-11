@@ -27,8 +27,12 @@ impl FactoryContract {
         }
         storage::extend_instance(&env);
         env.storage().instance().set(&DataKey::Admin, &admin);
-        env.storage().instance().set(&DataKey::FeeToSetter, &fee_to_setter);
-        env.storage().instance().set(&DataKey::PairWasmHash, &pair_wasm_hash);
+        env.storage()
+            .instance()
+            .set(&DataKey::FeeToSetter, &fee_to_setter);
+        env.storage()
+            .instance()
+            .set(&DataKey::PairWasmHash, &pair_wasm_hash);
         env.storage().instance().set(&DataKey::PairCount, &0u32);
         env.storage().instance().set(&DataKey::Initialized, &true);
     }
@@ -128,14 +132,18 @@ impl FactoryContract {
         let setter: Address = env.storage().instance().get(&DataKey::FeeToSetter).unwrap();
         setter.require_auth();
         storage::extend_instance(&env);
-        env.storage().instance().set(&DataKey::FeeToSetter, &new_setter);
+        env.storage()
+            .instance()
+            .set(&DataKey::FeeToSetter, &new_setter);
     }
 
     pub fn update_pair_wasm_hash(env: Env, new_hash: BytesN<32>) {
         let admin: Address = env.storage().instance().get(&DataKey::Admin).unwrap();
         admin.require_auth();
         storage::extend_instance(&env);
-        env.storage().instance().set(&DataKey::PairWasmHash, &new_hash);
+        env.storage()
+            .instance()
+            .set(&DataKey::PairWasmHash, &new_hash);
     }
 }
 

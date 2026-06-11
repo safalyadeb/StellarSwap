@@ -52,13 +52,7 @@ pub trait PairInterface {
         to: Address,
     ) -> (i128, i128);
 
-    fn swap(
-        env: Env,
-        caller: Address,
-        amount_x_out: i128,
-        amount_y_out: i128,
-        to: Address,
-    );
+    fn swap(env: Env, caller: Address, amount_x_out: i128, amount_y_out: i128, to: Address);
 
     fn sync(env: Env);
     fn skim(env: Env, to: Address);

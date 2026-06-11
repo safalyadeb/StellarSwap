@@ -4,7 +4,7 @@
 //! By embedding LP logic here instead of a separate contract, we eliminate a
 //! cross-contract call on every liquidity operation.
 
-use soroban_sdk::{panic_with_error, Address, Env};
+use soroban_sdk::{Address, Env};
 
 use stellar_swap_shared::errors::StellarSwapError;
 

@@ -18,7 +18,12 @@ pub fn deadline(env: &Env) -> u64 {
 pub fn mk_token<'a>(env: &'a Env, admin: &Address, sym: &str) -> TokenClient<'a> {
     let id = env.register(TokenContract, ());
     let c = TokenClient::new(env, &id);
-    c.initialize(admin, &7u32, &String::from_str(env, sym), &String::from_str(env, sym));
+    c.initialize(
+        admin,
+        &7u32,
+        &String::from_str(env, sym),
+        &String::from_str(env, sym),
+    );
     c
 }
 
