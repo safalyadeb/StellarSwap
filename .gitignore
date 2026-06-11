@@ -19,3 +19,10 @@ dist/
 .vscode/
 .idea/
 *.swp
+
+# Vercel
+.vercel/
+
+# Claude Code agent memory (local only, not part of the project)
+memory/
+.claude/
