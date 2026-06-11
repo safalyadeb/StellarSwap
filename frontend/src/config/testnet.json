@@ -1,0 +1,61 @@
+{
+  "network": "testnet",
+  "rpcUrl": "https://soroban-testnet.stellar.org",
+  "networkPassphrase": "Test SDF Network ; September 2015",
+  "horizonUrl": "https://horizon-testnet.stellar.org",
+  "deployer": "GAVFAXLV54GY7M4WZYIZQGP5NFRAJOUQA2LA4UDDUWVJCOIEPEMKYNQG",
+  "contracts": {
+    "factory": "CBFUWAPNDVOUQVKWFEKLGX2ZW6V574QT5IR5K6BZX2357GODR3KTEE7W",
+    "router": "CBV4H5OJSYOGEVP7EXXBZLJBPD7MG4PLKCEVLEIARCYZLG3ATYVABMSD",
+    "pairWasmHash": "8c3c21ff96006ef64f4c5a911b39c94a4a1d1947a3aa9638efc69e8ec8972958"
+  },
+  "tokens": {
+    "XLM": {
+      "sac": "CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC",
+      "asset": "native",
+      "symbol": "XLM",
+      "name": "Stellar Lumens",
+      "decimals": 7,
+      "issuer": null
+    },
+    "USDC": {
+      "sac": "CBIELTK6YBZJU5UP2WWQEUCYKLPU6AUNZ2BQ4WWFEIE3USCIHMXQDAMA",
+      "asset": "USDC:GBBD47IF6LWK7P7MDEVSCWR7DPUWV3NY3DTQEVFL4NAT4AQH3ZLLFLA5",
+      "symbol": "USDC",
+      "name": "USD Coin (Circle)",
+      "decimals": 7,
+      "issuer": "GBBD47IF6LWK7P7MDEVSCWR7DPUWV3NY3DTQEVFL4NAT4AQH3ZLLFLA5"
+    },
+    "EURC": {
+      "sac": "CBLJGRO4T5WWIM3L623KDOI3Z75DFB62DBEF2B66GE4SYIWWAN7N3IH4",
+      "asset": "EURC:GDMVJ74HFET3ZOXWSZ6PXJYW5QSNWNTYGAHIBVQB7AMDQSIP4UPWREE2",
+      "symbol": "EURC",
+      "name": "Euro Coin (StellarSwap Testnet)",
+      "decimals": 7,
+      "issuer": "GDMVJ74HFET3ZOXWSZ6PXJYW5QSNWNTYGAHIBVQB7AMDQSIP4UPWREE2"
+    }
+  },
+  "pairs": {
+    "XLM/USDC": {
+      "address": "CA54X7BPDD7NOQQBG77LOXDSPQ7WCKM7G7B4PPNWYPV6NQSPXTSLIJCE",
+      "token_x": "CBIELTK6YBZJU5UP2WWQEUCYKLPU6AUNZ2BQ4WWFEIE3USCIHMXQDAMA",
+      "token_y": "CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC",
+      "symbol_x": "USDC",
+      "symbol_y": "XLM",
+      "initial_reserve_x_stroops": "50000000",
+      "initial_reserve_y_stroops": "525000000",
+      "lp_supply": "162017517"
+    },
+    "XLM/EURC": {
+      "address": "CCXQUEJKX66A3VTOQR6B2GWR4ZEX325DSFNUCB7OJEA6SAVNWDTEZJFW",
+      "token_x": "CBLJGRO4T5WWIM3L623KDOI3Z75DFB62DBEF2B66GE4SYIWWAN7N3IH4",
+      "token_y": "CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC",
+      "symbol_x": "EURC",
+      "symbol_y": "XLM",
+      "initial_reserve_x_stroops": "50000000",
+      "initial_reserve_y_stroops": "577500000",
+      "lp_supply": "169925454"
+    }
+  },
+  "deployedAt": "2026-06-02"
+}

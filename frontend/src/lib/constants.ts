@@ -1,4 +1,7 @@
-import testnetConfig from '../../../config/testnet.json';
+// The frontend is its own deployable unit, so it bundles a snapshot of the
+// testnet contract addresses. Keep in sync with the repo-root config/testnet.json
+// (written by scripts/deploy/deploy_all.sh) after any redeploy.
+import testnetConfig from '../config/testnet.json';
 
 export const NETWORK = (process.env.NEXT_PUBLIC_NETWORK ?? 'testnet') as 'testnet' | 'local';
 
