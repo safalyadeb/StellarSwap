@@ -1,0 +1,17 @@
+{
+  "network": "local",
+  "rpcUrl": "http://localhost:8000/soroban/rpc",
+  "networkPassphrase": "Standalone Network ; February 2017",
+  "horizonUrl": "http://localhost:8000",
+  "contracts": {
+    "factory": "",
+    "router": "",
+    "pairWasmHash": ""
+  },
+  "testTokens": {
+    "TOKEN_A": "",
+    "TOKEN_B": "",
+    "TOKEN_C": ""
+  },
+  "pairs": {}
+}

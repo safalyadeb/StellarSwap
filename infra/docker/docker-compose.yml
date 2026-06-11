@@ -1,0 +1,82 @@
+version: '3.8'
+
+services:
+  # ── Stellar Quickstart (local node + Horizon API) ────────────────────────────
+  stellar-node:
+    image: stellar/quickstart:latest
+    environment:
+      - NETWORK=local
+    ports:
+      - "8000:8000"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    networks:
+      - stellarswap
+
+  # ── PostgreSQL (indexer database) ────────────────────────────────────────────
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: stellarswap
+      POSTGRES_USER: stellarswap
+      POSTGRES_PASSWORD: stellarswap_dev
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./../../infra/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U stellarswap"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - stellarswap
+
+  # ── Indexer service ───────────────────────────────────────────────────────────
+  indexer:
+    build:
+      context: ../../
+      dockerfile: infra/docker/Dockerfile.indexer
+    environment:
+      - DATABASE_URL=postgresql://stellarswap:stellarswap_dev@postgres:5432/stellarswap
+      - STELLAR_RPC_URL=http://stellar-node:8000/soroban/rpc
+      - HORIZON_URL=http://stellar-node:8000
+      - NETWORK=local
+      - CONFIG_PATH=/app/config/local.json
+    ports:
+      - "4000:4000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      stellar-node:
+        condition: service_healthy
+    networks:
+      - stellarswap
+
+  # ── Frontend (Next.js) ────────────────────────────────────────────────────────
+  frontend:
+    build:
+      context: ../../
+      dockerfile: infra/docker/Dockerfile.frontend
+    environment:
+      - NEXT_PUBLIC_NETWORK=local
+      - NEXT_PUBLIC_STELLAR_RPC_URL=http://localhost:8000/soroban/rpc
+      - NEXT_PUBLIC_HORIZON_URL=http://localhost:8000
+      - NEXT_PUBLIC_INDEXER_URL=http://localhost:4000
+    ports:
+      - "3000:3000"
+    depends_on:
+      - indexer
+    networks:
+      - stellarswap
+
+volumes:
+  postgres_data:
+
+networks:
+  stellarswap:
+    driver: bridge
