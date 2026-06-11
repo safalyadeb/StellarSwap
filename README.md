@@ -251,14 +251,23 @@ See [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md) for the full deployment walkthrou
 
 ## 📸 Screenshots
 
-| Mobile responsive UI | CI/CD pipeline running | Test output |
-|---|---|---|
-| <img width="250" alt="2026-06-12 00 42 37" src="https://github.com/user-attachments/assets/649ec175-ac47-4199-af7c-ada839dbeacb" />
-| <img width="1470" height="956" alt="Screenshot 2026-06-12 at 12 48 30 AM" src="https://github.com/user-attachments/assets/1a9a6a38-ed6c-40fb-b154-5501cab71f0b" />
-| ![Tests passing](docs/screenshots/tests-passing.png) |
+## Mobile Responsive UI
 
-> Images live in [`docs/screenshots/`](docs/screenshots/). See the [capture guide](docs/screenshots/README.md) to (re)generate them.
+<p align="center">
+  <img width="250" alt="Mobile Responsive UI" src="https://github.com/user-attachments/assets/649ec175-ac47-4199-af7c-ada839dbeacb" />
+</p>
 
+## CI/CD Pipeline Running
+
+<p align="center">
+  <img width="900" alt="CI/CD Pipeline Running" src="https://github.com/user-attachments/assets/1a9a6a38-ed6c-40fb-b154-5501cab71f0b" />
+</p>
+
+## Test Output
+
+<p align="center">
+  <img width="700" alt="Test Output" src="https://github.com/user-attachments/assets/378dceb4-b0c6-4fc9-82fa-afb9284fe75c" />
+</p>
 ---
 
 ## 🧮 The AMM math
