@@ -7,6 +7,7 @@
 [![Network](https://img.shields.io/badge/network-Stellar%20Testnet-7B61FF.svg)](https://stellar.expert/explorer/testnet)
 
 **Live demo:** **[https://frontend-safalyadeb1.vercel.app](https://stellarswapdex.vercel.app/)**
+**Demo Video:** **https://youtu.be/iduzraeKqmo**
 **Network:** Stellar Testnet ·
 **Contracts:** [deployed & verified ↓](#-deployment--on-chain-proof)
 
