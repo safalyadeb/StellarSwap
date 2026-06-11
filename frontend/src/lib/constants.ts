@@ -3,15 +3,18 @@
 // (written by scripts/deploy/deploy_all.sh) after any redeploy.
 import testnetConfig from '../config/testnet.json';
 
-export const NETWORK = (process.env.NEXT_PUBLIC_NETWORK ?? 'testnet') as 'testnet' | 'local';
+// Default to testnet. Only an explicit "local" selects the standalone network —
+// any other value (including a stray-newline env var) safely resolves to testnet.
+const RAW_NETWORK = (process.env.NEXT_PUBLIC_NETWORK ?? 'testnet').trim().toLowerCase();
+export const NETWORK: 'testnet' | 'local' = RAW_NETWORK === 'local' ? 'local' : 'testnet';
 
 export const NETWORK_PASSPHRASE =
-  NETWORK === 'testnet'
-    ? 'Test SDF Network ; September 2015'
-    : 'Standalone Network ; February 2017';
+  NETWORK === 'local'
+    ? 'Standalone Network ; February 2017'
+    : testnetConfig.networkPassphrase ?? 'Test SDF Network ; September 2015';
 
 export const STELLAR_RPC_URL =
-  process.env.NEXT_PUBLIC_STELLAR_RPC_URL ?? 'https://soroban-testnet.stellar.org';
+  process.env.NEXT_PUBLIC_STELLAR_RPC_URL ?? testnetConfig.rpcUrl ?? 'https://soroban-testnet.stellar.org';
 
 export const STELLAR_HORIZON_URL =
   process.env.NEXT_PUBLIC_STELLAR_HORIZON_URL ?? testnetConfig.horizonUrl ?? 'https://horizon-testnet.stellar.org';
