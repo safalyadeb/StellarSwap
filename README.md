@@ -1,13 +1,14 @@
 # StellarSwap
-
+<img width="2912" height="1662" alt="Landing" src="https://github.com/user-attachments/assets/bcbf2297-58be-42ef-9ee9-c76aae5ae596" />
 > A production-grade, Uniswap V2-inspired AMM DEX built on **Stellar** using **Soroban** smart contracts — with a full TypeScript SDK, real-time indexer, and a mobile-responsive Next.js interface.
 
 [![Test Suite](https://github.com/safalyadeb/StellarSwap/actions/workflows/test.yml/badge.svg)](https://github.com/safalyadeb/StellarSwap/actions/workflows/test.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Network](https://img.shields.io/badge/network-Stellar%20Testnet-7B61FF.svg)](https://stellar.expert/explorer/testnet)
 
-**Live demo:** **https://frontend-safalyadeb1.vercel.app**
-**Network:** Stellar Testnet · **Contracts:** [deployed & verified ↓](#-deployment--on-chain-proof)
+**Live demo:** **[https://frontend-safalyadeb1.vercel.app](https://stellarswapdex.vercel.app/)**
+**Network:** Stellar Testnet ·
+**Contracts:** [deployed & verified ↓](#-deployment--on-chain-proof)
 
 ---
 
