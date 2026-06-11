@@ -36,8 +36,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <WalletProvider>
             <div className="relative z-10 flex flex-col min-h-screen">
               <Navbar />
-              {/* pb-20 sm:pb-0 reserves space for the mobile bottom nav */}
-              <main className="flex-1 px-4 py-6 sm:py-10 pb-24 sm:pb-10">{children}</main>
+              {/* flex column so pages can vertically center; pb-24 clears the mobile bottom nav */}
+              <main className="flex-1 flex flex-col px-4 py-6 sm:py-10 pb-24 sm:pb-10">{children}</main>
               <footer className="hidden sm:block px-6 py-6 text-center text-txt-disabled text-xs">
                 StellarSwap · Stellar Testnet · Not audited — use at your own risk
               </footer>
