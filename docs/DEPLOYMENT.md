@@ -47,7 +47,7 @@ All contract addresses are written to `config/<network>.json` for use by the SDK
 ```bash
 # Rust toolchain
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-rustup target add wasm32-unknown-unknown
+rustup target add wasm32v1-none
 
 # Stellar CLI (soroban-cli)
 cargo install --locked stellar-cli --features opt
@@ -164,10 +164,10 @@ echo "Stellar node is ready!"
 ./scripts/build.sh
 
 # Or manually:
-cargo build --workspace --target wasm32-unknown-unknown --release
+cargo build --workspace --target wasm32v1-none --release
 
 # Optimized WASM files are in:
-# target/wasm32-unknown-unknown/release/
+# target/wasm32v1-none/release/
 #   stellar_swap_factory.wasm
 #   stellar_swap_pair.wasm
 #   stellar_swap_router.wasm
@@ -197,7 +197,7 @@ NETWORK=local ./scripts/deploy/deploy_all.sh
 ### 5.1 Pre-Deployment Checklist
 
 - [ ] All tests pass: `cargo test --workspace`
-- [ ] WASM builds successfully: `cargo build --workspace --target wasm32-unknown-unknown --release`
+- [ ] WASM builds successfully: `cargo build --workspace --target wasm32v1-none --release`
 - [ ] Deployer account funded on testnet
 - [ ] Admin account funded on testnet
 - [ ] `config/testnet.json` template prepared
@@ -207,11 +207,11 @@ NETWORK=local ./scripts/deploy/deploy_all.sh
 #### Step 1: Build Contracts
 
 ```bash
-cargo build --workspace --target wasm32-unknown-unknown --release
+cargo build --workspace --target wasm32v1-none --release
 
 # Optimize WASM (reduces size)
 stellar contract optimize \
-  --wasm target/wasm32-unknown-unknown/release/stellar_swap_pair.wasm
+  --wasm target/wasm32v1-none/release/stellar_swap_pair.wasm
 # Creates: stellar_swap_pair.optimized.wasm
 ```
 
@@ -222,7 +222,7 @@ stellar contract optimize \
 PAIR_WASM_HASH=$(stellar contract upload \
   --network testnet \
   --source deployer \
-  --wasm target/wasm32-unknown-unknown/release/stellar_swap_pair.optimized.wasm)
+  --wasm target/wasm32v1-none/release/stellar_swap_pair.optimized.wasm)
 
 echo "Pair WASM Hash: $PAIR_WASM_HASH"
 ```
@@ -233,7 +233,7 @@ echo "Pair WASM Hash: $PAIR_WASM_HASH"
 FACTORY_ADDRESS=$(stellar contract deploy \
   --network testnet \
   --source deployer \
-  --wasm target/wasm32-unknown-unknown/release/stellar_swap_factory.optimized.wasm)
+  --wasm target/wasm32v1-none/release/stellar_swap_factory.optimized.wasm)
 
 # Initialize Factory
 stellar contract invoke \
@@ -254,7 +254,7 @@ echo "Factory deployed at: $FACTORY_ADDRESS"
 ROUTER_ADDRESS=$(stellar contract deploy \
   --network testnet \
   --source deployer \
-  --wasm target/wasm32-unknown-unknown/release/stellar_swap_router.optimized.wasm)
+  --wasm target/wasm32v1-none/release/stellar_swap_router.optimized.wasm)
 
 # Initialize Router
 stellar contract invoke \
@@ -275,7 +275,7 @@ echo "Router deployed at: $ROUTER_ADDRESS"
 TOKEN_A_ADDRESS=$(stellar contract deploy \
   --network testnet \
   --source deployer \
-  --wasm target/wasm32-unknown-unknown/release/stellar_swap_token.optimized.wasm)
+  --wasm target/wasm32v1-none/release/stellar_swap_token.optimized.wasm)
 
 stellar contract invoke \
   --network testnet \
@@ -509,7 +509,7 @@ Pair contracts are immutable by design. If a bug is found:
 NEW_PAIR_WASM_HASH=$(stellar contract upload \
   --network testnet \
   --source deployer \
-  --wasm target/wasm32-unknown-unknown/release/stellar_swap_pair.optimized.wasm)
+  --wasm target/wasm32v1-none/release/stellar_swap_pair.optimized.wasm)
 
 # Update Factory to use new pair WASM for future creates
 stellar contract invoke \
@@ -526,13 +526,13 @@ Router is upgradeable by admin. The upgrade replaces the WASM but preserves the 
 
 ```bash
 # Build new router
-cargo build -p router --target wasm32-unknown-unknown --release
+cargo build -p router --target wasm32v1-none --release
 
 # Upload new WASM
 NEW_ROUTER_WASM=$(stellar contract upload \
   --network testnet \
   --source deployer \
-  --wasm target/wasm32-unknown-unknown/release/stellar_swap_router.optimized.wasm)
+  --wasm target/wasm32v1-none/release/stellar_swap_router.optimized.wasm)
 
 # Upgrade via admin
 stellar contract invoke \

@@ -15,7 +15,7 @@ echo "=============================="
 
 # Step 1: Build all contracts
 echo "[1/6] Building contracts..."
-cargo build --workspace --target wasm32-unknown-unknown --release
+cargo build --workspace --target wasm32v1-none --release
 echo "  ✓ Build complete"
 
 # Step 2: Upload Pair WASM and get hash
@@ -23,7 +23,7 @@ echo "[2/6] Uploading Pair WASM..."
 PAIR_WASM_HASH=$(stellar contract upload \
   --network "$NETWORK" \
   --source "$DEPLOYER" \
-  --wasm target/wasm32-unknown-unknown/release/stellar_swap_pair.wasm)
+  --wasm target/wasm32v1-none/release/stellar_swap_pair.wasm)
 echo "  ✓ Pair WASM hash: $PAIR_WASM_HASH"
 
 # Step 3: Deploy Factory
@@ -31,7 +31,7 @@ echo "[3/6] Deploying Factory..."
 FACTORY_ADDRESS=$(stellar contract deploy \
   --network "$NETWORK" \
   --source "$DEPLOYER" \
-  --wasm target/wasm32-unknown-unknown/release/stellar_swap_factory.wasm)
+  --wasm target/wasm32v1-none/release/stellar_swap_factory.wasm)
 
 ADMIN_ADDRESS=$(stellar keys address "$ADMIN")
 
@@ -50,7 +50,7 @@ echo "[4/6] Deploying Router..."
 ROUTER_ADDRESS=$(stellar contract deploy \
   --network "$NETWORK" \
   --source "$DEPLOYER" \
-  --wasm target/wasm32-unknown-unknown/release/stellar_swap_router.wasm)
+  --wasm target/wasm32v1-none/release/stellar_swap_router.wasm)
 
 stellar contract invoke \
   --network "$NETWORK" \
@@ -71,7 +71,7 @@ deploy_token() {
   local ADDR=$(stellar contract deploy \
     --network "$NETWORK" \
     --source "$DEPLOYER" \
-    --wasm target/wasm32-unknown-unknown/release/stellar_swap_token.wasm)
+    --wasm target/wasm32v1-none/release/stellar_swap_token.wasm)
 
   stellar contract invoke \
     --network "$NETWORK" \

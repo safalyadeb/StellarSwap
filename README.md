@@ -124,7 +124,7 @@ StellarSwap/
 ```bash
 # Rust + WASM target
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-rustup target add wasm32-unknown-unknown
+rustup target add wasm32v1-none
 
 # Stellar CLI
 cargo install --locked stellar-cli --features opt
@@ -136,7 +136,7 @@ nvm install 20
 ### Build & test the contracts
 
 ```bash
-cargo build --workspace --target wasm32-unknown-unknown --release
+cargo build --workspace --target wasm32v1-none --release
 cargo test --workspace        # 59 Rust tests
 ```
 

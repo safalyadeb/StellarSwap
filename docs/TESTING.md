@@ -783,7 +783,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
         with:
-          targets: wasm32-unknown-unknown
+          targets: wasm32v1-none
       - run: cargo test --workspace
       - run: cargo clippy --workspace -- -D warnings
       - run: cargo fmt --check --all

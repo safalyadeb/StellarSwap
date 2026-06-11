@@ -563,7 +563,7 @@ The following are explicit security assumptions. If any are violated, the securi
 
 3. **Rust and Soroban SDK have no critical bugs**: We rely on the correctness of the Soroban SDK and Rust's type system.
 
-4. **WASM compilation is correct**: `cargo build --target wasm32-unknown-unknown` produces WASM that behaves identically to the Rust source code.
+4. **WASM compilation is correct**: `cargo build --target wasm32v1-none` produces WASM that behaves identically to the Rust source code.
 
 5. **Admin key is not compromised**: The Factory admin (for fee configuration) holds a private key that is not stolen. In production, this should be a multisig or DAO.
 

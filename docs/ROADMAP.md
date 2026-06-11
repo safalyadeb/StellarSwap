@@ -45,7 +45,7 @@ Establish a fully functional local development environment for Soroban contract 
 
 #### 0.1 Rust Toolchain
 - Install Rust stable + nightly toolchain
-- Add `wasm32-unknown-unknown` target: `rustup target add wasm32-unknown-unknown`
+- Add `wasm32v1-none` target: `rustup target add wasm32v1-none`
 - Install `cargo-soroban` (Stellar's Soroban CLI)
 - Verify: `soroban --version`
 
