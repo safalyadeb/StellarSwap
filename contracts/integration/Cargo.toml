@@ -1,0 +1,14 @@
+[package]
+name = "stellar-swap-integration"
+version = "1.0.0"
+edition = "2021"
+
+# This crate has no lib — it is only an integration test runner.
+# Files in tests/ use dev-dependencies automatically.
+[dev-dependencies]
+soroban-sdk          = { version = "26.0.1", features = ["testutils"] }
+stellar-swap-shared  = { path = "../shared" }
+stellar-swap-token   = { path = "../token",   features = ["testutils"] }
+stellar-swap-pair    = { path = "../pair",    features = ["testutils"] }
+stellar-swap-factory = { path = "../factory", features = ["testutils"] }
+stellar-swap-router  = { path = "../router",  features = ["testutils"] }
