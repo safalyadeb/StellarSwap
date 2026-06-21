@@ -1,0 +1,10 @@
+{
+  "name": "@stellarswap/testing",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Real-user simulation harness: generates funded testnet wallets and performs verifiable on-chain swaps against the deployed StellarSwap contracts.",
+  "scripts": {
+    "simulate": "node simulate-users.mjs"
+  }
+}

@@ -1,0 +1,614 @@
+{
+  "network": "testnet",
+  "generatedAt": "2026-06-21T20:05:20.923Z",
+  "router": "CBV4H5OJSYOGEVP7EXXBZLJBPD7MG4PLKCEVLEIARCYZLG3ATYVABMSD",
+  "cohortSize": 12,
+  "usersOnboarded": 12,
+  "usersFullyCompleted": 12,
+  "totalSwaps": 22,
+  "totalOnChainTxns": 64,
+  "results": [
+    {
+      "id": "user-01",
+      "publicKey": "GAC2YN5JSUEI77XEOWUFU53QNP4JR6RL447GJGFWDBBANTGXDIVD3SQ7",
+      "actions": [
+        {
+          "action": "fund_via_friendbot",
+          "result": "success",
+          "hash": "44de02d09cd4423a20e833c2a5abc534b41366cd18d846d03bd26b5e0da98371",
+          "timestamp": "2026-06-21T19:58:10.546Z"
+        },
+        {
+          "action": "trustline_USDC",
+          "result": "success",
+          "hash": "b489d2c4535119a4ab293837b4317083c91fcd0998a542250632be1a92f03a5a",
+          "timestamp": "2026-06-21T19:58:19.490Z"
+        },
+        {
+          "action": "approve_router_XLM",
+          "result": "success",
+          "hash": "05ce2280899cc590b9db7ae5991ec1b8b5463f7af5cfa17c215c0dd357928acf",
+          "timestamp": "2026-06-21T19:58:25.582Z"
+        }
+      ],
+      "swaps": [
+        {
+          "label": "XLM→USDC",
+          "amountIn": "2.0000000 XLM",
+          "expectedOut": "0.0130326 USDC",
+          "minOut": "0.0117293 USDC",
+          "txHash": "9c644dcbb7c80f67be44dd5b01861081713bd72995462e0ca3a9521427cbfec9",
+          "ledger": 3211664,
+          "timestamp": "2026-06-21T19:58:34.797Z",
+          "status": "SUCCESS",
+          "explorer": "https://stellar.expert/explorer/testnet/tx/9c644dcbb7c80f67be44dd5b01861081713bd72995462e0ca3a9521427cbfec9"
+        },
+        {
+          "label": "XLM→USDC (repeat)",
+          "amountIn": "1.0000000 XLM",
+          "expectedOut": "0.0065133 USDC",
+          "minOut": "0.0058619 USDC",
+          "txHash": "1d7783456a56e2f7e148147e210a378b24d93034b5eac1e4b4618f58e5ef750c",
+          "ledger": 3211666,
+          "timestamp": "2026-06-21T19:58:46.100Z",
+          "status": "SUCCESS",
+          "explorer": "https://stellar.expert/explorer/testnet/tx/1d7783456a56e2f7e148147e210a378b24d93034b5eac1e4b4618f58e5ef750c"
+        }
+      ],
+      "status": "success"
+    },
+    {
+      "id": "user-02",
+      "publicKey": "GDUQQQMHL4VU4CKQUWFQNK2DABF66RZUESACO6HLHW47MFM67J6XE5CP",
+      "actions": [
+        {
+          "action": "fund_via_friendbot",
+          "result": "success",
+          "hash": "12297c82a6a743541105fa4dbaebaee7b4acd46be472390b513d67b216075516",
+          "timestamp": "2026-06-21T19:58:54.768Z"
+        },
+        {
+          "action": "trustline_USDC",
+          "result": "success",
+          "hash": "594b00b8fe9598ac7528b67618613082696934a190b7c00f80696037a5b65ef4",
+          "timestamp": "2026-06-21T19:58:59.375Z"
+        },
+        {
+          "action": "approve_router_XLM",
+          "result": "success",
+          "hash": "351f03a8541c244ca88373a2fbf48785781bc04d0f40efbbf251aa8e11f83718",
+          "timestamp": "2026-06-21T19:59:05.188Z"
+        },
+        {
+          "action": "approve_router_USDC",
+          "result": "success",
+          "hash": "e21237e20f1967578ed4ec28bd0fbbc64c9dce11b144f690bf4118e02ec06964",
+          "timestamp": "2026-06-21T19:59:20.275Z"
+        }
+      ],
+      "swaps": [
+        {
+          "label": "XLM→USDC",
+          "amountIn": "3.0000000 XLM",
+          "expectedOut": "0.0195279 USDC",
+          "minOut": "0.0175751 USDC",
+          "txHash": "9971d7b1b0290075d8442fec6d0033351ed548b819c38bfcca3628ac1b02ca67",
+          "ledger": 3211671,
+          "timestamp": "2026-06-21T19:59:10.606Z",
+          "status": "SUCCESS",
+          "explorer": "https://stellar.expert/explorer/testnet/tx/9971d7b1b0290075d8442fec6d0033351ed548b819c38bfcca3628ac1b02ca67"
+        },
+        {
+          "label": "USDC→XLM",
+          "amountIn": "0.0097639 USDC",
+          "expectedOut": "1.4913479 XLM",
+          "minOut": "1.3422131 XLM",
+          "txHash": "801b95ee1e9ea08b56f64dd852a06b889ec5797305a0333b6a2bc519a43b58dd",
+          "ledger": 3211674,
+          "timestamp": "2026-06-21T19:59:24.465Z",
+          "status": "SUCCESS",
+          "explorer": "https://stellar.expert/explorer/testnet/tx/801b95ee1e9ea08b56f64dd852a06b889ec5797305a0333b6a2bc519a43b58dd"
+        }
+      ],
+      "status": "success"
+    },
+    {
+      "id": "user-03",
+      "publicKey": "GDPCJVQ2CKLHLYOJGOGKMFJ5BTRWIKLEUTBGYNJZ2DF2TW4G4JDDVBH4",
+      "actions": [
+        {
+          "action": "fund_via_friendbot",
+          "result": "success",
+          "hash": "73720fd375c15dd7b227754e0336dcdcec0c36771b274619df3db995c96dbcd0",
+          "timestamp": "2026-06-21T19:59:30.098Z"
+        },
+        {
+          "action": "trustline_USDC",
+          "result": "success",
+          "hash": "f962d7ffb737204e8edbbd2daa0fb7ea8c487dd28591a4b5ddfcd59c17c365be",
+          "timestamp": "2026-06-21T19:59:34.368Z"
+        },
+        {
+          "action": "approve_router_XLM",
+          "result": "success",
+          "hash": "c5f9134f9b539532d38c6479eee1a58f1da29c168a6240eb92b49add6ed65fb3",
+          "timestamp": "2026-06-21T19:59:39.415Z"
+        }
+      ],
+      "swaps": [
+        {
+          "label": "XLM→USDC",
+          "amountIn": "4.0000000 XLM",
+          "expectedOut": "0.0260212 USDC",
+          "minOut": "0.0234190 USDC",
+          "txHash": "f7943a137f66b19c23333a2d1ba08a84fcf78034854c62bae7031f18d1886bd4",
+          "ledger": 3211678,
+          "timestamp": "2026-06-21T19:59:45.759Z",
+          "status": "SUCCESS",
+          "explorer": "https://stellar.expert/explorer/testnet/tx/f7943a137f66b19c23333a2d1ba08a84fcf78034854c62bae7031f18d1886bd4"
+        }
+      ],
+      "status": "success"
+    },
+    {
+      "id": "user-04",
+      "publicKey": "GAF7HO5JL3GLMRYTKUXN32Z2QYDFGLCLEPYIWJW7HZFSOL3XNWMDJ2US",
+      "actions": [
+        {
+          "action": "fund_via_friendbot",
+          "result": "success",
+          "hash": "fe968d9799ea7af45229d39b288ce6a7f3df0536bb54f08976a71705f29350a7",
+          "timestamp": "2026-06-21T19:59:50.982Z"
+        },
+        {
+          "action": "trustline_USDC",
+          "result": "success",
+          "hash": "73a9b053f6f3bba7f0cd38a940020dc5995d87cb1dafa1a0df37e013a74be634",
+          "timestamp": "2026-06-21T19:59:59.593Z"
+        },
+        {
+          "action": "approve_router_XLM",
+          "result": "success",
+          "hash": "411b388342d4a1ac89afbdef058392cdf5afc206d167bf0d516561754ddabcf1",
+          "timestamp": "2026-06-21T20:00:05.422Z"
+        },
+        {
+          "action": "approve_router_USDC",
+          "result": "success",
+          "hash": "4211f698593826d33b3b268efc76c248b013dba29e23e6a73ec4011f595debd6",
+          "timestamp": "2026-06-21T20:00:24.775Z"
+        }
+      ],
+      "swaps": [
+        {
+          "label": "XLM→USDC",
+          "amountIn": "5.0000000 XLM",
+          "expectedOut": "0.0324816 USDC",
+          "minOut": "0.0292334 USDC",
+          "txHash": "de21fea29167c91c4e07c28ddfdbe3086e1d5271495930abfa42a1e0f4e0fe51",
+          "ledger": 3211683,
+          "timestamp": "2026-06-21T20:00:09.977Z",
+          "status": "SUCCESS",
+          "explorer": "https://stellar.expert/explorer/testnet/tx/de21fea29167c91c4e07c28ddfdbe3086e1d5271495930abfa42a1e0f4e0fe51"
+        },
+        {
+          "label": "XLM→USDC (repeat)",
+          "amountIn": "1.0000000 XLM",
+          "expectedOut": "0.0064903 USDC",
+          "minOut": "0.0058412 USDC",
+          "txHash": "9149c888335e6649c7936621b82c1c1073e764ce994fad4e5c88838915ac73d2",
+          "ledger": 3211684,
+          "timestamp": "2026-06-21T20:00:15.537Z",
+          "status": "SUCCESS",
+          "explorer": "https://stellar.expert/explorer/testnet/tx/9149c888335e6649c7936621b82c1c1073e764ce994fad4e5c88838915ac73d2"
+        },
+        {
+          "label": "USDC→XLM",
+          "amountIn": "0.0162408 USDC",
+          "expectedOut": "2.4867371 XLM",
+          "minOut": "2.2380633 XLM",
+          "txHash": "0457d6585f83f4d6f2734ad6b059605513324f9f077ab2cb71263a6148b45fb8",
+          "ledger": 3211687,
+          "timestamp": "2026-06-21T20:00:30.197Z",
+          "status": "SUCCESS",
+          "explorer": "https://stellar.expert/explorer/testnet/tx/0457d6585f83f4d6f2734ad6b059605513324f9f077ab2cb71263a6148b45fb8"
+        }
+      ],
+      "status": "success"
+    },
+    {
+      "id": "user-05",
+      "publicKey": "GAUYE2VA6HV55ESHBPMDMR5HR4CO7EJZELQYURE44GUS4GGLOCHT6V4Z",
+      "actions": [
+        {
+          "action": "fund_via_friendbot",
+          "result": "success",
+          "hash": "bcbc7f1a1a082c4ab3544fe2ddcb1b4f976fa461812a095c3968f546479405b6",
+          "timestamp": "2026-06-21T20:00:36.148Z"
+        },
+        {
+          "action": "trustline_USDC",
+          "result": "success",
+          "hash": "9b17223bbd9985812881ad6f2033cc4ef29e629efd5b66c8b17c20e5dbc4a021",
+          "timestamp": "2026-06-21T20:00:44.329Z"
+        },
+        {
+          "action": "approve_router_XLM",
+          "result": "success",
+          "hash": "5a9f9ed167a97ac802a02aa96405532987672d62aa87acb756672e0342b22ca1",
+          "timestamp": "2026-06-21T20:00:50.271Z"
+        }
+      ],
+      "swaps": [
+        {
+          "label": "XLM→USDC",
+          "amountIn": "6.0000000 XLM",
+          "expectedOut": "0.0389301 USDC",
+          "minOut": "0.0350370 USDC",
+          "txHash": "c2aaf760368b358dfec1b3b40f999034263953b510652e1b262073243f6d8719",
+          "ledger": 3211692,
+          "timestamp": "2026-06-21T20:00:54.777Z",
+          "status": "SUCCESS",
+          "explorer": "https://stellar.expert/explorer/testnet/tx/c2aaf760368b358dfec1b3b40f999034263953b510652e1b262073243f6d8719"
+        }
+      ],
+      "status": "success"
+    },
+    {
+      "id": "user-06",
+      "publicKey": "GC3NJSJJEGSE6KVNU2CAM3N6Q3XR6ZN3LCD6EBR5AR4JPQA4DWB4OPWY",
+      "actions": [
+        {
+          "action": "fund_via_friendbot",
+          "result": "success",
+          "hash": "0c7c4cd8b0168038e98dbbc5db7741a036d8eb4155820fadea1dd60ae1460551",
+          "timestamp": "2026-06-21T20:01:00.291Z"
+        },
+        {
+          "action": "trustline_USDC",
+          "result": "success",
+          "hash": "6a97a65e40e80a3ebe5106b90d1c6a40fba77394e11d9783ba47d6f585d16492",
+          "timestamp": "2026-06-21T20:01:09.644Z"
+        },
+        {
+          "action": "approve_router_XLM",
+          "result": "success",
+          "hash": "be2ad63abc416c78dbc01235af42c673a419dfddedafcfe83a811df9183bc7f9",
+          "timestamp": "2026-06-21T20:01:15.769Z"
+        },
+        {
+          "action": "approve_router_USDC",
+          "result": "success",
+          "hash": "7062e4f7b7ec0776b468ea018bc0edd9f390a25c374dcf537455490cf942545a",
+          "timestamp": "2026-06-21T20:01:30.078Z"
+        }
+      ],
+      "swaps": [
+        {
+          "label": "XLM→USDC",
+          "amountIn": "2.0000000 XLM",
+          "expectedOut": "0.0129608 USDC",
+          "minOut": "0.0116647 USDC",
+          "txHash": "732ad78d5500e5905f8e695a0235cbefeb2ac7d9a5bffb259a18b08c156c544c",
+          "ledger": 3211698,
+          "timestamp": "2026-06-21T20:01:24.684Z",
+          "status": "SUCCESS",
+          "explorer": "https://stellar.expert/explorer/testnet/tx/732ad78d5500e5905f8e695a0235cbefeb2ac7d9a5bffb259a18b08c156c544c"
+        },
+        {
+          "label": "USDC→XLM",
+          "amountIn": "0.0064804 USDC",
+          "expectedOut": "0.9941608 XLM",
+          "minOut": "0.8947447 XLM",
+          "txHash": "65a2efea26fdf7d02fff81e6abf791407e5740bad3085d95abe781357431219d",
+          "ledger": 3211700,
+          "timestamp": "2026-06-21T20:01:35.739Z",
+          "status": "SUCCESS",
+          "explorer": "https://stellar.expert/explorer/testnet/tx/65a2efea26fdf7d02fff81e6abf791407e5740bad3085d95abe781357431219d"
+        }
+      ],
+      "status": "success"
+    },
+    {
+      "id": "user-07",
+      "publicKey": "GD4XEC5REBLKRHYR25VPWAQV2XM2FBQXZOVZTBUUFNTDDAGJACZK6S22",
+      "actions": [
+        {
+          "action": "fund_via_friendbot",
+          "result": "success",
+          "hash": "573c80f74031e6dcafdef380420b51835636d2a10575e6e7f6c3868a768a0e58",
+          "timestamp": "2026-06-21T20:01:40.360Z"
+        },
+        {
+          "action": "trustline_USDC",
+          "result": "success",
+          "hash": "5b17dd7d25f62b35241cc74cf9c4756768181aa2041c56fb8e58f460dc844ced",
+          "timestamp": "2026-06-21T20:01:44.339Z"
+        },
+        {
+          "action": "approve_router_XLM",
+          "result": "success",
+          "hash": "40513ada458d9bb7db066755a3405c452ce973b75fab7aaed97319a36af0a555",
+          "timestamp": "2026-06-21T20:01:49.620Z"
+        }
+      ],
+      "swaps": [
+        {
+          "label": "XLM→USDC",
+          "amountIn": "3.0000000 XLM",
+          "expectedOut": "0.0194322 USDC",
+          "minOut": "0.0174889 USDC",
+          "txHash": "d4f9a0fe21e1d94bd14c990968e06e138f9cf8a61221912ec77f10551f075987",
+          "ledger": 3211704,
+          "timestamp": "2026-06-21T20:01:56.627Z",
+          "status": "SUCCESS",
+          "explorer": "https://stellar.expert/explorer/testnet/tx/d4f9a0fe21e1d94bd14c990968e06e138f9cf8a61221912ec77f10551f075987"
+        },
+        {
+          "label": "XLM→USDC (repeat)",
+          "amountIn": "1.0000000 XLM",
+          "expectedOut": "0.0064734 USDC",
+          "minOut": "0.0058260 USDC",
+          "txHash": "e4f4f2c938e5a7f6de5e3208bd159fdb03705db347a81c0c6335afaa7cebbf52",
+          "ledger": 3211706,
+          "timestamp": "2026-06-21T20:02:06.543Z",
+          "status": "SUCCESS",
+          "explorer": "https://stellar.expert/explorer/testnet/tx/e4f4f2c938e5a7f6de5e3208bd159fdb03705db347a81c0c6335afaa7cebbf52"
+        }
+      ],
+      "status": "success"
+    },
+    {
+      "id": "user-08",
+      "publicKey": "GAITCRHUTDJ3L7LUUW2DTLXELR7Z364MZ7P4X4JVQYHQUBFI2HT72ITD",
+      "actions": [
+        {
+          "action": "fund_via_friendbot",
+          "result": "success",
+          "hash": "4a8619fc1f4525a008b4c77b420236ff54dc2d456a4ab84babf1462951e24ac7",
+          "timestamp": "2026-06-21T20:02:10.452Z"
+        },
+        {
+          "action": "trustline_USDC",
+          "result": "success",
+          "hash": "3814bd69d7de583db261a6d66d0b5733c7f263f6aa73ba6ea3c0d2e93be9d48f",
+          "timestamp": "2026-06-21T20:02:19.364Z"
+        },
+        {
+          "action": "approve_router_XLM",
+          "result": "success",
+          "hash": "4a8fcd9a6155bb5d56120e889fbe58c47e6018f45675ccb99c410afcd7b8e044",
+          "timestamp": "2026-06-21T20:02:24.536Z"
+        },
+        {
+          "action": "approve_router_USDC",
+          "result": "success",
+          "hash": "cb2c4f40308e35e6603012fa9e576040331105c6d1086cc31d124d3414e84d35",
+          "timestamp": "2026-06-21T20:02:40.863Z"
+        }
+      ],
+      "swaps": [
+        {
+          "label": "XLM→USDC",
+          "amountIn": "4.0000000 XLM",
+          "expectedOut": "0.0258740 USDC",
+          "minOut": "0.0232866 USDC",
+          "txHash": "b29d66c4c34abbb80b439eba7f61aabb4c99b4b42f0ba9b8cfc39eb75cbe2980",
+          "ledger": 3211711,
+          "timestamp": "2026-06-21T20:02:30.727Z",
+          "status": "SUCCESS",
+          "explorer": "https://stellar.expert/explorer/testnet/tx/b29d66c4c34abbb80b439eba7f61aabb4c99b4b42f0ba9b8cfc39eb75cbe2980"
+        },
+        {
+          "label": "USDC→XLM",
+          "amountIn": "0.0129370 USDC",
+          "expectedOut": "1.9886275 XLM",
+          "minOut": "1.7897647 XLM",
+          "txHash": "d9b97e41505d5cb47b59f3cd7cd8c9a3bedadd9f9e71e143ef7404a15d109064",
+          "ledger": 3211714,
+          "timestamp": "2026-06-21T20:02:45.572Z",
+          "status": "SUCCESS",
+          "explorer": "https://stellar.expert/explorer/testnet/tx/d9b97e41505d5cb47b59f3cd7cd8c9a3bedadd9f9e71e143ef7404a15d109064"
+        }
+      ],
+      "status": "success"
+    },
+    {
+      "id": "user-09",
+      "publicKey": "GBEVGGPFHI5CWCJSUGMSVODAFQ66FXP6VVRY6WRXTX5XYZGOO4NEARXH",
+      "actions": [
+        {
+          "action": "fund_via_friendbot",
+          "result": "success",
+          "hash": "134bdb1ec0168592134b5da237f2e6b7be4f1d1420a501bf3009bf35e3192053",
+          "timestamp": "2026-06-21T20:02:51.049Z"
+        },
+        {
+          "action": "trustline_USDC",
+          "result": "success",
+          "hash": "a4f8ee41dc4295845307b76b840fb3a6d80802edd8c88b69d453aed5462693a0",
+          "timestamp": "2026-06-21T20:02:59.610Z"
+        },
+        {
+          "action": "approve_router_XLM",
+          "result": "success",
+          "hash": "8da23c971b5bf7c87c707ba76a4da231bc0092943d3d2585df3bb16cafdcde52",
+          "timestamp": "2026-06-21T20:03:06.262Z"
+        }
+      ],
+      "swaps": [
+        {
+          "label": "XLM→USDC",
+          "amountIn": "5.0000000 XLM",
+          "expectedOut": "0.0323177 USDC",
+          "minOut": "0.0290859 USDC",
+          "txHash": "d9f97b72b0ab96e18c11ccd58d058df7db17465daf0fe971c258babed3fee285",
+          "ledger": 3211720,
+          "timestamp": "2026-06-21T20:03:15.268Z",
+          "status": "SUCCESS",
+          "explorer": "https://stellar.expert/explorer/testnet/tx/d9f97b72b0ab96e18c11ccd58d058df7db17465daf0fe971c258babed3fee285"
+        }
+      ],
+      "status": "success"
+    },
+    {
+      "id": "user-10",
+      "publicKey": "GA4KL2XJWJY3RJ465YKYUQBV2WQX3VMJHJX4BDTQJCYXMTE2MZZY5GBA",
+      "actions": [
+        {
+          "action": "fund_via_friendbot",
+          "result": "success",
+          "hash": "b2aacac5623a1de17a362df3e72b7308654b4528410ba2e98cf9eb9ca70aa076",
+          "timestamp": "2026-06-21T20:03:20.539Z"
+        },
+        {
+          "action": "trustline_USDC",
+          "result": "success",
+          "hash": "ff0c7491f508e97221a949ff9228050479895996f079395c86d194e81deedb1a",
+          "timestamp": "2026-06-21T20:03:30.639Z"
+        },
+        {
+          "action": "approve_router_XLM",
+          "result": "success",
+          "hash": "a69a7f542adf43ae5266d671044072aed3cf967b046f74f81215272ce53d6754",
+          "timestamp": "2026-06-21T20:03:36.093Z"
+        },
+        {
+          "action": "approve_router_USDC",
+          "result": "success",
+          "hash": "5f9056a1c60808f223671b87a202922f236e56b840c534651efcb0c53fbc1dbc",
+          "timestamp": "2026-06-21T20:03:59.485Z"
+        }
+      ],
+      "swaps": [
+        {
+          "label": "XLM→USDC",
+          "amountIn": "6.0000000 XLM",
+          "expectedOut": "0.0387161 USDC",
+          "minOut": "0.0348444 USDC",
+          "txHash": "7b6f6bd93ca501e905a855cad310218ac98798c786d0b755a8e45154daf4dd57",
+          "ledger": 3211725,
+          "timestamp": "2026-06-21T20:03:40.494Z",
+          "status": "SUCCESS",
+          "explorer": "https://stellar.expert/explorer/testnet/tx/7b6f6bd93ca501e905a855cad310218ac98798c786d0b755a8e45154daf4dd57"
+        },
+        {
+          "label": "XLM→USDC (repeat)",
+          "amountIn": "1.0000000 XLM",
+          "expectedOut": "0.0064457 USDC",
+          "minOut": "0.0058011 USDC",
+          "txHash": "0eb0e17cfee637b34a18b9be63016beb957cdcb8745ca297e86b58c6b11146a1",
+          "ledger": 3211727,
+          "timestamp": "2026-06-21T20:03:50.254Z",
+          "status": "SUCCESS",
+          "explorer": "https://stellar.expert/explorer/testnet/tx/0eb0e17cfee637b34a18b9be63016beb957cdcb8745ca297e86b58c6b11146a1"
+        },
+        {
+          "label": "USDC→XLM",
+          "amountIn": "0.0193580 USDC",
+          "expectedOut": "2.9843036 XLM",
+          "minOut": "2.6858732 XLM",
+          "txHash": "ccaef85456d48e844f98755cdcdf6e8431e69f2f044e2637bba51a21a57f775f",
+          "ledger": 3211730,
+          "timestamp": "2026-06-21T20:04:06.243Z",
+          "status": "SUCCESS",
+          "explorer": "https://stellar.expert/explorer/testnet/tx/ccaef85456d48e844f98755cdcdf6e8431e69f2f044e2637bba51a21a57f775f"
+        }
+      ],
+      "status": "success"
+    },
+    {
+      "id": "user-11",
+      "publicKey": "GASF7OIAMBLQAKMQW35DV6KPC4DZQQJDGEY4UZGV7BVY4GW6P7YJHRIX",
+      "actions": [
+        {
+          "action": "fund_via_friendbot",
+          "result": "success",
+          "hash": "cecf7a4cbc325cd30ca3b9197764c9625e4c61cbb4962814fc1fe72e55ec43a8",
+          "timestamp": "2026-06-21T20:04:10.409Z"
+        },
+        {
+          "action": "trustline_USDC",
+          "result": "success",
+          "hash": "23c4175d81eb3299d3a586b4b3a1d0b2b18cca3a812087ef95711f0260ebb9c7",
+          "timestamp": "2026-06-21T20:04:20.493Z"
+        },
+        {
+          "action": "approve_router_XLM",
+          "result": "success",
+          "hash": "177293b1ccca63835fd0cc772981e7090a91084136200ded40627adaeaada6b1",
+          "timestamp": "2026-06-21T20:04:24.790Z"
+        }
+      ],
+      "swaps": [
+        {
+          "label": "XLM→USDC",
+          "amountIn": "2.0000000 XLM",
+          "expectedOut": "0.0128974 USDC",
+          "minOut": "0.0116076 USDC",
+          "txHash": "161a6ede9f3bb7c6ae201d7344822f1f638844d076ea0390b1468eed681e1705",
+          "ledger": 3211735,
+          "timestamp": "2026-06-21T20:04:31.003Z",
+          "status": "SUCCESS",
+          "explorer": "https://stellar.expert/explorer/testnet/tx/161a6ede9f3bb7c6ae201d7344822f1f638844d076ea0390b1468eed681e1705"
+        }
+      ],
+      "status": "success"
+    },
+    {
+      "id": "user-12",
+      "publicKey": "GBAUDLKMAYDFN4ZGYY64KYIMQJ7O75KPL7Q2DLMSJ6AJYMXTOMCHX7GL",
+      "actions": [
+        {
+          "action": "fund_via_friendbot",
+          "result": "success",
+          "hash": "0449f46197c2629b708ef65b76e51cca5aab57d18ca172f2fcac8e5ec1f0fe17",
+          "timestamp": "2026-06-21T20:04:35.017Z"
+        },
+        {
+          "action": "trustline_USDC",
+          "result": "success",
+          "hash": "557605bf689997c2e395621d8119de13d9553cd98777bd65d1bdc637670fe536",
+          "timestamp": "2026-06-21T20:04:45.593Z"
+        },
+        {
+          "action": "approve_router_XLM",
+          "result": "success",
+          "hash": "19cfd15cda6a63362ec3830d63ef20c486e9f4391cfd3d1aed558f882dd619cf",
+          "timestamp": "2026-06-21T20:04:51.424Z"
+        },
+        {
+          "action": "approve_router_USDC",
+          "result": "success",
+          "hash": "3ab3aecb997576d8391d80273c26642e51d1bb4ba6dfc370f380239448f11d08",
+          "timestamp": "2026-06-21T20:05:11.397Z"
+        }
+      ],
+      "swaps": [
+        {
+          "label": "XLM→USDC",
+          "amountIn": "3.0000000 XLM",
+          "expectedOut": "0.0193314 USDC",
+          "minOut": "0.0173982 USDC",
+          "txHash": "d1bd9af63eeea98d833ae844b16476db50f2bb216a207b4bf67b2222f35d65f9",
+          "ledger": 3211741,
+          "timestamp": "2026-06-21T20:05:01.041Z",
+          "status": "SUCCESS",
+          "explorer": "https://stellar.expert/explorer/testnet/tx/d1bd9af63eeea98d833ae844b16476db50f2bb216a207b4bf67b2222f35d65f9"
+        },
+        {
+          "label": "USDC→XLM",
+          "amountIn": "0.0096657 USDC",
+          "expectedOut": "1.4913560 XLM",
+          "minOut": "1.3422204 XLM",
+          "txHash": "8c4b6da6d292cd50c9645ae3daccd566538a6c7ac6affd986b108f4468feaf2f",
+          "ledger": 3211745,
+          "timestamp": "2026-06-21T20:05:20.122Z",
+          "status": "SUCCESS",
+          "explorer": "https://stellar.expert/explorer/testnet/tx/8c4b6da6d292cd50c9645ae3daccd566538a6c7ac6affd986b108f4468feaf2f"
+        }
+      ],
+      "status": "success"
+    }
+  ]
+}
