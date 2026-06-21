@@ -21,12 +21,14 @@
 4. [Repository structure](#-repository-structure)
 5. [Quick start](#-quick-start)
 6. [Testing](#-testing)
-7. [CI/CD](#-cicd)
-8. [Deployment & on-chain proof](#-deployment--on-chain-proof)
-9. [Screenshots](#-screenshots)
-10. [The AMM math](#-the-amm-math)
-11. [Security](#-security)
-12. [License](#-license)
+7. [Analytics & monitoring](#-analytics--monitoring)
+8. [CI/CD](#-cicd)
+9. [Deployment & on-chain proof](#-deployment--on-chain-proof)
+10. [Screenshots](#-screenshots)
+11. [The AMM math](#-the-amm-math)
+12. [Security](#-security)
+13. [Documentation index](#-documentation-index)
+14. [License](#-license)
 
 ---
 
@@ -56,7 +58,10 @@ StellarSwap is a decentralized exchange (DEX) for the Stellar blockchain. It imp
 | **CI/CD pipeline setup** | `.github/workflows/test.yml` | 5 jobs: Rust tests + clippy + fmt, property tests, coverage, SDK tests, frontend tests + build |
 | **Smart contract deployment workflow** | `scripts/deploy/` + [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md) | Scripted build → upload WASM → deploy → create pairs → seed liquidity |
 | **Mobile responsive frontend** | `frontend/` (Tailwind, `sm:` breakpoints) | Mobile-first layout; collapsible nav, responsive swap/pool widgets |
-| **Error handling & loading states** | `frontend/src/context/ToastContext.tsx`, `components/ui/Spinner.tsx`, `SwapWidget.tsx` | Toast errors, per-phase swap status, disabled-button states, insufficient-balance/liquidity guards |
+| **Error handling & loading states** | `frontend/src/context/ToastContext.tsx`, `components/ui/Spinner.tsx`, `components/ErrorBoundary.tsx`, `SwapWidget.tsx` | Toast errors, app-wide error boundary, per-phase swap status, disabled-button states, insufficient-balance/liquidity guards |
+| **Analytics** | `frontend/src/lib/analytics.ts` + [`docs/analytics.md`](docs/analytics.md) | PostHog product analytics (env-gated, privacy-first); onboarding + swap funnels |
+| **Monitoring** | `frontend/src/lib/monitoring.ts`, `components/ErrorBoundary.tsx` + [`docs/monitoring.md`](docs/monitoring.md) | Sentry error tracking + tracing (env-gated), key/address scrubbing |
+| **Real-user testing** | `scripts/testing/` + [`docs/user-testing-report.md`](docs/user-testing-report.md) | 12 funded testnet wallets, 22 verifiable on-chain swaps, 100% success |
 | **Tests for contracts and frontend** | `contracts/integration`, `sdk/typescript/tests`, `frontend/src/lib/__tests__` | **103 passing tests** across all three layers (see [Testing](#-testing)) |
 | **Production-ready architecture** | monorepo: contracts / sdk / indexer / frontend / infra | Immutable pairs, stateless router, shared math crate, single source of truth for config |
 | **Documentation & demo presentation** | this README + [`docs/`](docs/) | Architecture, security, testing, deployment, roadmap, and PRD docs |
@@ -198,6 +203,45 @@ The frontend and SDK math are tested against the **same numeric vectors** as the
 
 See [`docs/TESTING.md`](docs/TESTING.md) for the full invariant-based testing strategy.
 
+### Real-user simulation (on-chain)
+
+Beyond unit tests, a [simulation harness](scripts/testing/) drives a cohort of
+independent, funded testnet wallets through the full journey — onboarding
+(Friendbot), trustlines, Router approvals, and **real signed swaps** — producing
+verifiable on-chain activity.
+
+```bash
+node scripts/testing/simulate-users.mjs        # 12 users by default
+```
+
+Latest run: **12/12 users onboarded, 22 successful swaps, 64 on-chain
+transactions, 100% swap success rate** — every hash independently verifiable on
+Stellar Expert. Secret keys are written outside the repo (`~/.stellarswap/`),
+never committed; only public evidence is saved to
+[`docs/testing-evidence/evidence.json`](docs/testing-evidence/evidence.json).
+Full results: [`docs/user-testing-report.md`](docs/user-testing-report.md).
+
+---
+
+## 📈 Analytics & monitoring
+
+Production observability is built in and **opt-in by environment variable** — with
+no keys set, nothing loads and every call is a safe no-op (so dev/CI stay clean).
+
+| Capability | Tool | Module | Docs |
+|---|---|---|---|
+| Product analytics | PostHog | `frontend/src/lib/analytics.ts` | [analytics.md](docs/analytics.md) |
+| Error monitoring + tracing | Sentry | `frontend/src/lib/monitoring.ts` | [monitoring.md](docs/monitoring.md) |
+| App-wide error boundary | React | `frontend/src/components/ErrorBoundary.tsx` | — |
+
+- **Analytics** captures the onboarding (`app_loaded → wallet_connected`) and
+  activation (`wallet_connected → swap_submitted → swap_succeeded`) funnels.
+  Wallet identity is hashed; no raw addresses or PII leave the browser.
+- **Monitoring** reports uncaught and handled errors with breadcrumb trails, and
+  scrubs Stellar keys/addresses from every event before send.
+
+To enable, copy the keys into `frontend/.env.local` (see [`.env.example`](frontend/.env.example)) and redeploy.
+
 ---
 
 ## 🔄 CI/CD
@@ -297,6 +341,25 @@ The invariant `x × y = k` is checked at the end of every swap — if it would d
 > ⚠️ This is **testnet** software. Do not use on mainnet until a formal security audit is complete.
 
 Full threat model and attack-surface analysis: [`docs/SECURITY.md`](docs/SECURITY.md).
+
+---
+
+## 📚 Documentation index
+
+| Document | Contents |
+|---|---|
+| [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | System design, contract data flow, component diagrams |
+| [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) | Build → deploy → seed liquidity walkthrough, env config |
+| [docs/TESTING.md](docs/TESTING.md) | Invariant-based testing strategy across all layers |
+| [docs/user-testing-report.md](docs/user-testing-report.md) | Real-user simulation results with on-chain proof |
+| [docs/mobile-testing.md](docs/mobile-testing.md) | Responsive design matrix and verification checklist |
+| [docs/analytics.md](docs/analytics.md) | Analytics architecture, events, funnels, privacy |
+| [docs/monitoring.md](docs/monitoring.md) | Monitoring architecture, alerting, data scrubbing |
+| [docs/feedback-summary.md](docs/feedback-summary.md) | Consolidated tester feedback and improvements |
+| [docs/SECURITY.md](docs/SECURITY.md) | Threat model and attack-surface analysis |
+| [docs/AUDIT.md](docs/AUDIT.md) | Full MVP readiness audit & submission checklist |
+| [docs/ROADMAP.md](docs/ROADMAP.md) | Forward-looking roadmap |
+| [docs/PRD.md](docs/PRD.md) | Product requirements document |
 
 ---
 
