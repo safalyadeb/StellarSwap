@@ -13,6 +13,8 @@ import { TOKENS, TokenMeta, resolvePair, DEFAULT_SLIPPAGE_BPS, DEFAULT_DEADLINE_
 import { getAmountOut, getAmountIn, priceImpact, midPrice } from '../../lib/math';
 import { fromStroops, toStroops, fmtAmount, fmtUsd, fmtPct } from '../../lib/format';
 import { swapExactIn, swapExactOut, ensureTrustline } from '../../lib/soroban';
+import { track } from '../../lib/analytics';
+import { addBreadcrumb, captureError } from '../../lib/monitoring';
 
 type Side = 'in' | 'out';
 
@@ -117,6 +119,14 @@ export function SwapWidget() {
     if (!publicKey || !reserves) return;
     setSwapping(true);
     setStatusMsg('');
+    track('swap_submitted', {
+      pair: `${tokenIn.symbol}/${tokenOut.symbol}`,
+      tokenIn: tokenIn.symbol,
+      tokenOut: tokenOut.symbol,
+      exactSide,
+      priceImpact: Number(impact.toFixed(6)),
+    });
+    addBreadcrumb('swap submitted', { pair: `${tokenIn.symbol}/${tokenOut.symbol}`, exactSide });
     try {
       if (tokenOut.issuer) {
         setStatusMsg('Setting up token trustline…');
@@ -150,11 +160,22 @@ export function SwapWidget() {
 
       setAmountIn(''); setAmountOut('');
       refreshBalances();
+      track('swap_succeeded', {
+        pair: `${tokenIn.symbol}/${tokenOut.symbol}`,
+        tokenIn: tokenIn.symbol,
+        tokenOut: tokenOut.symbol,
+        txHash: hash,
+      });
       toast.success('Swap Successful', {
         message: `You received ${parseFloat(savedOut).toFixed(6)} ${tokenOut.symbol}`,
         txHash: hash,
       });
     } catch (e: any) {
+      track('swap_failed', {
+        pair: `${tokenIn.symbol}/${tokenOut.symbol}`,
+        message: (e as Error).message?.slice(0, 120),
+      });
+      captureError(e, { scope: 'swap', pair: `${tokenIn.symbol}/${tokenOut.symbol}`, exactSide });
       toast.error('Swap Failed', { message: (e as Error).message });
     } finally {
       setSwapping(false);

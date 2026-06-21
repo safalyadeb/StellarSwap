@@ -16,6 +16,7 @@ import {
   getAddress,
   getNetwork,
 } from '@stellar/freighter-api';
+import { track, identifyWallet, resetIdentity } from '../lib/analytics';
 
 interface WalletContextValue {
   publicKey: string | null;
@@ -40,10 +41,12 @@ export function WalletProvider({ children }: { children: ReactNode }) {
   const connect = useCallback(async () => {
     setIsConnecting(true);
     setError(null);
+    track('wallet_connect_started');
     try {
       const conn = await freighterIsConnected();
       if (!conn.isConnected) {
         setError('Freighter not detected. Install the Freighter extension and refresh.');
+        track('wallet_connect_failed', { reason: 'not_detected' });
         return;
       }
 
@@ -51,6 +54,7 @@ export function WalletProvider({ children }: { children: ReactNode }) {
       const access = await requestAccess();
       if (access.error) {
         setError(typeof access.error === 'string' ? access.error : 'Connection rejected');
+        track('wallet_connect_failed', { reason: 'rejected' });
         return;
       }
 
@@ -58,8 +62,11 @@ export function WalletProvider({ children }: { children: ReactNode }) {
       setPublicKey(access.address);
       setNetwork(net.network ?? null);
       localStorage.setItem(STORAGE_KEY, '1');
+      identifyWallet(access.address);
+      track('wallet_connected', { network: net.network ?? 'unknown' });
     } catch (e) {
       setError((e as Error).message);
+      track('wallet_connect_failed', { reason: 'error' });
     } finally {
       setIsConnecting(false);
     }
@@ -70,6 +77,8 @@ export function WalletProvider({ children }: { children: ReactNode }) {
     setNetwork(null);
     setError(null);
     localStorage.removeItem(STORAGE_KEY);
+    track('wallet_disconnected');
+    resetIdentity();
   }, []);
 
   // Re-hydrate connection on mount if previously connected

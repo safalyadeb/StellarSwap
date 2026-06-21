@@ -11,6 +11,8 @@ import { TOKENS, TokenMeta, resolvePair, EXPLORER, DEFAULT_DEADLINE_MINS } from 
 import { quote } from '../../lib/math';
 import { fromStroops, toStroops, fmtAmount, fmtUsd } from '../../lib/format';
 import { addLiquidity, removeLiquidity, getLpBalance } from '../../lib/soroban';
+import { track } from '../../lib/analytics';
+import { captureError } from '../../lib/monitoring';
 import { useEffect } from 'react';
 
 type Tab = 'add' | 'remove';
@@ -78,6 +80,8 @@ export function LiquidityWidget() {
   const doAdd = async () => {
     if (!publicKey || !amountA || !amountB) return;
     setWorking(true); setError(null); setTxHash(null);
+    const pair = `${tokenA.symbol}/${tokenB.symbol}`;
+    track('liquidity_add_submitted', { pair });
     try {
       const aD = toStroops(amountA);
       const bD = toStroops(amountB);
@@ -90,13 +94,20 @@ export function LiquidityWidget() {
         deadline,
       });
       setTxHash(hash); setAmountA(''); setAmountB(''); refreshBalances();
-    } catch (e) { setError((e as Error).message); }
+      track('liquidity_add_succeeded', { pair, txHash: hash });
+    } catch (e) {
+      setError((e as Error).message);
+      track('liquidity_failed', { pair, action: 'add', message: (e as Error).message?.slice(0, 120) });
+      captureError(e, { scope: 'liquidity_add', pair });
+    }
     finally { setWorking(false); }
   };
 
   const doRemove = async () => {
     if (!publicKey || !route || lpBalance === 0n) return;
     setWorking(true); setError(null); setTxHash(null);
+    const pair = `${tokenA.symbol}/${tokenB.symbol}`;
+    track('liquidity_remove_submitted', { pair, pct: removePct });
     try {
       const liq = (lpBalance * BigInt(removePct)) / 100n;
       const deadline = Math.floor(Date.now() / 1000) + DEFAULT_DEADLINE_MINS * 60;
@@ -106,7 +117,12 @@ export function LiquidityWidget() {
         liquidity: liq, amountAMin: 0n, amountBMin: 0n, deadline,
       });
       setTxHash(hash); refreshBalances();
-    } catch (e) { setError((e as Error).message); }
+      track('liquidity_remove_succeeded', { pair, txHash: hash });
+    } catch (e) {
+      setError((e as Error).message);
+      track('liquidity_failed', { pair, action: 'remove', message: (e as Error).message?.slice(0, 120) });
+      captureError(e, { scope: 'liquidity_remove', pair });
+    }
     finally { setWorking(false); }
   };
 
