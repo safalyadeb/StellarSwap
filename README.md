@@ -17,18 +17,19 @@
 
 1. [What is StellarSwap?](#what-is-stellarswap)
 2. [How each requirement is met](#-how-each-requirement-is-met)
-3. [Architecture](#-architecture)
-4. [Repository structure](#-repository-structure)
-5. [Quick start](#-quick-start)
-6. [Testing](#-testing)
-7. [Analytics & monitoring](#-analytics--monitoring)
-8. [CI/CD](#-cicd)
-9. [Deployment & on-chain proof](#-deployment--on-chain-proof)
-10. [Screenshots](#-screenshots)
-11. [The AMM math](#-the-amm-math)
-12. [Security](#-security)
-13. [Documentation index](#-documentation-index)
-14. [License](#-license)
+3. [Wallet integration (Freighter)](#-wallet-integration-freighter)
+4. [Architecture](#-architecture)
+5. [Repository structure](#-repository-structure)
+6. [Quick start](#-quick-start)
+7. [Testing](#-testing)
+8. [Analytics & monitoring](#-analytics--monitoring)
+9. [CI/CD](#-cicd)
+10. [Deployment & on-chain proof](#-deployment--on-chain-proof)
+11. [Screenshots](#-screenshots)
+12. [The AMM math](#-the-amm-math)
+13. [Security](#-security)
+14. [Documentation index](#-documentation-index)
+15. [License](#-license)
 
 ---
 
@@ -52,6 +53,7 @@ StellarSwap is a decentralized exchange (DEX) for the Stellar blockchain. It imp
 
 | Requirement | Where it lives | Notes |
 |---|---|---|
+| **Stellar wallet integration** | `frontend/src/lib/wallet.ts`, `context/WalletContext.tsx`, `components/ConnectButton.tsx`, `lib/soroban.ts` | [`@stellar/freighter-api`](https://www.npmjs.com/package/@stellar/freighter-api) Connect-Wallet flow → `requestAccess`/`setAllowed` permissions, `getAddress` retrieval, `signTransaction` signing. Unit-tested in `lib/__tests__/wallet.test.ts` + verified in CI. See [Wallet integration](#-wallet-integration-freighter) |
 | **Advanced smart contract development** | `contracts/{factory,pair,router,token,shared}` | Constant-product AMM, embedded LP tokens, `x*y=k` invariant, checked `i128` arithmetic |
 | **Inter-contract communication** | `contracts/router` → `contracts/factory` → `contracts/pair` → token SACs | Router resolves pairs via Factory and invokes Pair/token contracts cross-contract |
 | **Event streaming & real-time updates** | `indexer/` + `frontend/src/hooks/usePoolData.ts` | Horizon SSE event indexer → Postgres → REST API; frontend polls live reserves for instant quotes |
@@ -65,6 +67,69 @@ StellarSwap is a decentralized exchange (DEX) for the Stellar blockchain. It imp
 | **Tests for contracts and frontend** | `contracts/integration`, `sdk/typescript/tests`, `frontend/src/lib/__tests__` | **103 passing tests** across all three layers (see [Testing](#-testing)) |
 | **Production-ready architecture** | monorepo: contracts / sdk / indexer / frontend / infra | Immutable pairs, stateless router, shared math crate, single source of truth for config |
 | **Documentation & demo presentation** | this README + [`docs/`](docs/) | Architecture, security, testing, deployment, roadmap, and PRD docs |
+
+---
+
+## 🔐 Wallet Integration (Freighter)
+
+StellarSwap connects to the user's **Stellar wallet via [`@stellar/freighter-api`](https://www.npmjs.com/package/@stellar/freighter-api)** (declared in [`frontend/package.json`](frontend/package.json)). Every Freighter call is centralized in one module — [`frontend/src/lib/wallet.ts`](frontend/src/lib/wallet.ts) — which is unit-tested ([`lib/__tests__/wallet.test.ts`](frontend/src/lib/__tests__/wallet.test.ts)) and verified in CI. The full flow — library integration, a Connect-Wallet button, permission grants, address retrieval, and transaction signing — lives in the frontend:
+
+| Step | File | What it does |
+|---|---|---|
+| **1. Library integration** | [`frontend/src/lib/wallet.ts`](frontend/src/lib/wallet.ts) | Wraps `@stellar/freighter-api` (`isConnected`, `isAllowed`, `setAllowed`, `requestAccess`, `getAddress`, `getNetwork`, `signTransaction`) into named, testable functions |
+| **2. Connect-Wallet flow** | [`frontend/src/components/ConnectButton.tsx`](frontend/src/components/ConnectButton.tsx) → [`context/WalletContext.tsx`](frontend/src/context/WalletContext.tsx) | "Connect Wallet" button → `connect()` → `connectWallet()` detects Freighter, opens approval popup, shows connected address + network, supports disconnect |
+| **3. Permissions, address & signing** | [`lib/wallet.ts`](frontend/src/lib/wallet.ts) + [`lib/soroban.ts`](frontend/src/lib/soroban.ts) | `requestAccess`/`setAllowed`/`isAllowed` (permissions), `getAddress` (address retrieval), `signTransaction` (signing every swap/liquidity tx) |
+
+**1 + 2 — detect, request permission, retrieve address** (`frontend/src/lib/wallet.ts`):
+
+```ts
+import {
+  isConnected as freighterIsConnected,
+  isAllowed, setAllowed, requestAccess, getAddress, getNetwork, signTransaction,
+} from '@stellar/freighter-api';
+
+// Connect: detect the extension, request access (permission), return address + network.
+export async function connectWallet(): Promise<WalletConnection> {
+  if (!(await isWalletInstalled())) {
+    throw new Error('Freighter not detected. Install the Freighter extension and refresh.');
+  }
+  const access = await requestAccess();        // opens approval popup, returns address
+  if (access.error) throw new Error('Connection rejected');
+  const net = await getNetwork();
+  return { address: access.address, network: net.network ?? null };
+}
+
+// Re-hydrate on reload: only if the app still holds permission (no popup).
+export async function getPermittedConnection(): Promise<WalletConnection | null> {
+  const allowed = await isAllowed();           // permission check
+  if (!allowed.isAllowed) return null;
+  const addr = await getAddress();             // address retrieval
+  const net = await getNetwork();
+  return { address: addr.address, network: net.network ?? null };
+}
+```
+
+`WalletContext.tsx` calls `connectWallet()` from its `connect()` handler, and `<ConnectButton />` renders the **Connect Wallet** button wired to it.
+
+The `<ConnectButton />` ([`frontend/src/components/ConnectButton.tsx`](frontend/src/components/ConnectButton.tsx)) renders the **Connect Wallet** button, wires it to `connect()`, and once connected shows the shortened address, a network indicator, and a **Disconnect** action.
+
+**3 — sign and submit a transaction** — `signWithWallet()` in `lib/wallet.ts` wraps Freighter's `signTransaction`; `lib/soroban.ts` calls it for every swap/liquidity action:
+
+```ts
+// lib/wallet.ts — the app never touches the user's secret key; Freighter signs in-extension
+export async function signWithWallet(xdr: string, networkPassphrase: string, address: string): Promise<string> {
+  const signed = await signTransaction(xdr, { networkPassphrase, address });
+  if (signed.error) throw new Error('Transaction rejected in wallet');
+  return signed.signedTxXdr;
+}
+
+// lib/soroban.ts — build + simulate the Soroban tx, then sign + broadcast
+const signedXdr = await signWithWallet(prepared.toXDR(), NETWORK_PASSPHRASE, publicKey);
+const signedTx = TransactionBuilder.fromXDR(signedXdr, NETWORK_PASSPHRASE);
+await server.sendTransaction(signedTx);       // broadcast the wallet-signed tx
+```
+
+Every on-chain action (swap, add/remove liquidity) is signed by Freighter before submission — the app never holds the user's secret key. A standalone write-up with the same evidence lives in [`WALLET_INTEGRATION.md`](WALLET_INTEGRATION.md).
 
 ---
 

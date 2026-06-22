@@ -8,14 +8,7 @@ import {
   useEffect,
   ReactNode,
 } from 'react';
-import {
-  isConnected as freighterIsConnected,
-  isAllowed,
-  setAllowed,
-  requestAccess,
-  getAddress,
-  getNetwork,
-} from '@stellar/freighter-api';
+import { connectWallet, getPermittedConnection } from '../lib/wallet';
 import { track, identifyWallet, resetIdentity } from '../lib/analytics';
 
 interface WalletContextValue {
@@ -43,27 +36,14 @@ export function WalletProvider({ children }: { children: ReactNode }) {
     setError(null);
     track('wallet_connect_started');
     try {
-      const conn = await freighterIsConnected();
-      if (!conn.isConnected) {
-        setError('Freighter not detected. Install the Freighter extension and refresh.');
-        track('wallet_connect_failed', { reason: 'not_detected' });
-        return;
-      }
-
-      // requestAccess opens the Freighter approval popup and returns the address
-      const access = await requestAccess();
-      if (access.error) {
-        setError(typeof access.error === 'string' ? access.error : 'Connection rejected');
-        track('wallet_connect_failed', { reason: 'rejected' });
-        return;
-      }
-
-      const net = await getNetwork();
-      setPublicKey(access.address);
-      setNetwork(net.network ?? null);
+      // Detects Freighter, requests access (opens the approval popup), and
+      // returns the granted address + active network. See lib/wallet.ts.
+      const { address, network: net } = await connectWallet();
+      setPublicKey(address);
+      setNetwork(net);
       localStorage.setItem(STORAGE_KEY, '1');
-      identifyWallet(access.address);
-      track('wallet_connected', { network: net.network ?? 'unknown' });
+      identifyWallet(address);
+      track('wallet_connected', { network: net ?? 'unknown' });
     } catch (e) {
       setError((e as Error).message);
       track('wallet_connect_failed', { reason: 'error' });
@@ -87,15 +67,12 @@ export function WalletProvider({ children }: { children: ReactNode }) {
     if (localStorage.getItem(STORAGE_KEY) !== '1') return;
     (async () => {
       try {
-        const conn = await freighterIsConnected();
-        if (!conn.isConnected) return;
-        const allowed = await isAllowed();
-        if (!allowed.isAllowed) return;
-        const addr = await getAddress();
-        if (addr.address) {
-          const net = await getNetwork();
-          setPublicKey(addr.address);
-          setNetwork(net.network ?? null);
+        // Re-hydrate only if Freighter is installed and the app still holds
+        // permission (isAllowed) — reads address + network without a popup.
+        const conn = await getPermittedConnection();
+        if (conn) {
+          setPublicKey(conn.address);
+          setNetwork(conn.network);
         }
       } catch {
         /* ignore */

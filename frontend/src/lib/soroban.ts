@@ -16,7 +16,7 @@ import {
   Operation,
   Horizon,
 } from '@stellar/stellar-sdk';
-import { signTransaction } from '@stellar/freighter-api';
+import { signWithWallet } from './wallet';
 import { STELLAR_RPC_URL, STELLAR_HORIZON_URL, NETWORK_PASSPHRASE, CONTRACTS, READ_ACCOUNT } from './constants';
 
 export const server = new rpc.Server(STELLAR_RPC_URL, { allowHttp: true });
@@ -81,16 +81,10 @@ async function buildAndSubmit(
   const prepared = rpc.assembleTransaction(built, sim).build();
 
   onProgress?.('Confirm in your Freighter wallet…');
-  const signed = await signTransaction(prepared.toXDR(), {
-    networkPassphrase: NETWORK_PASSPHRASE,
-    address: publicKey,
-  });
-  if (signed.error) {
-    throw new Error('Transaction rejected in wallet');
-  }
+  const signedXdr = await signWithWallet(prepared.toXDR(), NETWORK_PASSPHRASE, publicKey);
 
   onProgress?.('Processing transaction on blockchain…');
-  const signedTx = TransactionBuilder.fromXDR(signed.signedTxXdr, NETWORK_PASSPHRASE) as Transaction;
+  const signedTx = TransactionBuilder.fromXDR(signedXdr, NETWORK_PASSPHRASE) as Transaction;
   const sent = await server.sendTransaction(signedTx);
 
   if (sent.status === 'ERROR') {
@@ -206,13 +200,14 @@ export async function ensureTrustline(
     .setTimeout(60)
     .build();
 
-  const signed = await signTransaction(tx.toXDR(), {
-    networkPassphrase: NETWORK_PASSPHRASE,
-    address: publicKey,
-  });
-  if (signed.error) throw new Error('Trustline setup rejected in wallet');
+  const signedXdr = await signWithWallet(
+    tx.toXDR(),
+    NETWORK_PASSPHRASE,
+    publicKey,
+    'Trustline setup rejected in wallet',
+  );
 
-  const signedTx = TransactionBuilder.fromXDR(signed.signedTxXdr, NETWORK_PASSPHRASE) as Transaction;
+  const signedTx = TransactionBuilder.fromXDR(signedXdr, NETWORK_PASSPHRASE) as Transaction;
   await horizonServer.submitTransaction(signedTx);
 }
 
