@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { PAIR_LIST, TOKENS, USD_ANCHOR_SYMBOL, tokenBySac } from '../lib/constants';
 import { getReserves, getLpTotalSupply } from '../lib/soroban';
+import { allPairsLength } from '../lib/contract';
 import { fromStroops } from '../lib/format';
 
 export interface PoolData {
@@ -31,11 +32,14 @@ export function usePoolData() {
   const [prices, setPrices] = useState<PriceMap>({ [USD_ANCHOR_SYMBOL]: 1 });
   const [loading, setLoading] = useState(true);
   const [lastUpdated, setLastUpdated] = useState<number>(0);
+  const [factoryPoolCount, setFactoryPoolCount] = useState<number>(0);
   const mounted = useRef(true);
 
   const refresh = useCallback(async () => {
     try {
-      const results = await Promise.all(
+      const [count, results] = await Promise.all([
+        allPairsLength(),
+        Promise.all(
         PAIR_LIST.map(async (p) => {
           const [rx, ry] = await getReserves(p.address);
           const lp = await getLpTotalSupply(p.address);
@@ -51,10 +55,11 @@ export function usePoolData() {
             lpSupply: lp,
           } as PoolData;
         }),
-      );
+        )]);
       if (!mounted.current) return;
       setPools(results);
       setPrices(derivePrices(results));
+      setFactoryPoolCount(count);
       setLastUpdated(Date.now());
     } catch {
       /* keep previous data */
@@ -73,7 +78,7 @@ export function usePoolData() {
     };
   }, [refresh]);
 
-  return { pools, prices, loading, lastUpdated, refresh };
+  return { pools, prices, loading, lastUpdated, factoryPoolCount, refresh };
 }
 
 /**

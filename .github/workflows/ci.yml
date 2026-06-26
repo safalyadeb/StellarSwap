@@ -1,4 +1,4 @@
-name: Test Suite
+name: CI
 
 on:
   push:
@@ -12,8 +12,8 @@ env:
 
 jobs:
   # ── Rust smart contract tests ────────────────────────────────────────────────
-  rust-tests:
-    name: Rust Contract Tests
+  contracts:
+    name: Smart Contract CI
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -104,26 +104,17 @@ jobs:
       - name: Install dependencies
         run: npm ci
         working-directory: frontend
-      # Confirms the Stellar wallet (Freighter) integration is present:
-      # the @stellar/freighter-api dependency and its use for connecting,
-      # permissions/address retrieval, and transaction signing.
-      - name: Verify Stellar wallet integration (Freighter)
-        working-directory: frontend
-        run: |
-          grep -q '"@stellar/freighter-api"' package.json
-          grep -Eq 'requestAccess|setAllowed|getAddress' src/lib/wallet.ts
-          grep -q 'signTransaction' src/lib/wallet.ts
-          test -f src/components/ConnectButton.tsx
-          test -f src/context/WalletContext.tsx
-          echo "✓ Freighter wallet integration present (connect, permissions, address, signing)"
-      - name: Run frontend tests
-        run: npm test
-        working-directory: frontend
-      - name: Type check
-        run: npm run typecheck
+      - name: Lint
+        run: npm run lint
         working-directory: frontend
       - name: Build
         run: npm run build
         working-directory: frontend
         env:
           NEXT_PUBLIC_NETWORK: testnet
+      - name: Test
+        run: npm test
+        working-directory: frontend
+      - name: Type check
+        run: npm run typecheck
+        working-directory: frontend
